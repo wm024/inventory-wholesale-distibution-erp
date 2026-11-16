@@ -1,5 +1,4 @@
 # BUSINESS REQUIREMENTS DOCUMENT (BRD)
-
 ## Advanced Wholesale Distribution & Supply Chain ERP
 
 **Project Name:** Advanced Wholesale Distribution & Supply Chain ERP Implementation  
@@ -8,12 +7,16 @@
 **Deployment Model:** On-Premise  
 **Operating System:** Ubuntu Linux  
 **Database:** PostgreSQL  
-**Document Type:** Business Requirements Document (BRD)  
-**Document Version:** 1.0  
-**Document Status:** Baseline – Draft for Portfolio Implementation  
+**Document ID:** ADN-BRD-001  
+**Project ID:** ADN-ERP-2026-001  
+**Document Version:** 1.1  
+**Document Status:** Revised Draft – Pending Portfolio Baseline Approval  
 **Prepared For:** ERP Implementation Case Study  
 **Prepared By:** ERP Implementation Consultant  
-**Date:** 12 November 2026
+**Document Date:** 16 November 2026  
+**Classification:** Portfolio / Fictional Business Case
+
+> **Portfolio Disclaimer:** PT Arunika Distribusi Nusantara, all stakeholder identities, operational policies, transaction values, financial figures, targets, and sample records in this document are fictional. They are designed as realistic assumptions for an ERP implementation portfolio. They do not represent an actual company's approved policies or official tax advice.
 
 ---
 
@@ -29,29 +32,62 @@
 | Organization | PT Arunika Distribusi Nusantara |
 | ERP System | Odoo 19 Enterprise |
 | Document Owner | ERP Business Analyst |
-| Version | 1.0 |
-| Status | Draft for Baseline |
+| Version | 1.1 |
+| Status | Revised Draft – Pending Portfolio Baseline Approval |
 | Classification | Portfolio / Fictional Business Case |
+| Currency | Indonesian Rupiah (IDR) |
+| Country | Indonesia |
 
 ## 2. Revision History
 
 | Version | Date | Description | Author |
 |---|---|---|---|
 | 1.0 | 12-Nov-2026 | Initial BRD preparation | ERP Business Analyst |
+| 1.1 | 16-Nov-2026 | Clarified approval matrix, accounting policies, tax assumptions, credit management, quality criteria, vendor KPIs, dashboard formulas, and data migration requirements | ERP Business Analyst |
 
 ## 3. Approval Matrix
 
+The following stakeholders represent fictional roles established for this portfolio case study.
+
 | Role | Responsibility | Approval Status |
 |---|---|---|
-| Project Sponsor | Business direction and budget approval | Pending |
-| Managing Director | Executive approval | Pending |
-| Operations Manager | Warehouse and distribution requirements | Pending |
-| Procurement Manager | Purchasing requirements | Pending |
-| Sales Manager | Sales and customer requirements | Pending |
-| Finance Manager | Accounting and financial requirements | Pending |
-| ERP Project Manager | Project coordination | Pending |
+| Project Sponsor | Business direction, project objectives, and budget assumptions | Pending |
+| Managing Director | Executive approval and business policy authorization | Pending |
+| Operations Manager | Warehouse, inventory, logistics, and operational requirements | Pending |
+| Procurement Manager | Purchasing, supplier selection, and vendor evaluation requirements | Pending |
+| Sales Manager | Sales processes, pricing, discounts, and customer management | Pending |
+| Finance Manager | Accounting, tax assumptions, credit control, and financial reporting | Pending |
+| ERP Project Manager | Project coordination and requirements baseline control | Pending |
 
-*All company names, personnel, transactions, financial figures, addresses, and business scenarios in this document are fictional and created exclusively for portfolio demonstration.*
+**Approval procedure:**
+
+1. Each stakeholder reviews the requirements within their responsibility.
+2. Questions and requested changes are recorded in the requirements review log.
+3. The ERP Business Analyst updates the document where necessary.
+4. The relevant stakeholder confirms the revised requirements.
+5. The Project Sponsor and Managing Director provide final portfolio baseline approval.
+6. The ERP Project Manager records the approved baseline version and date.
+
+No stakeholder approval is claimed to have occurred merely because a fictional name or signature is included in this document. Approval must be represented as a clearly labeled portfolio simulation.
+
+## 4. Document Usage and Baseline Rules
+
+This BRD defines the business requirements and expected business outcomes. It does not prescribe the detailed Odoo implementation design.
+
+The following document hierarchy applies:
+
+| Document | Primary Purpose |
+|---|---|
+| BRD | Defines business needs, policies, requirements, and expected outcomes |
+| SOW | Defines implementation scope, deliverables, responsibilities, and boundaries |
+| Process Mapping | Defines AS-IS and TO-BE business processes |
+| FSD | Defines detailed functional behavior and system requirements |
+| Fit-Gap Analysis | Determines whether requirements use standard Odoo, configuration, customization, or integration |
+| TDD | Defines technical architecture and custom development design |
+| Test Strategy & Test Cases | Defines validation approach and test scenarios |
+| RTM | Tracks requirements through design, implementation, and testing |
+
+Any changes to an approved baseline must be recorded through a change request containing the requirement ID, reason, impact, priority, approval, and revised version.
 
 ---
 
@@ -59,9 +95,9 @@
 
 ## 1.1 Business Overview
 
-PT Arunika Distribusi Nusantara is a fictional Indonesian wholesale distribution company specializing in the procurement, storage, and distribution of Fast-Moving Consumer Goods (FMCG), household products, and consumer goods.
+PT Arunika Distribusi Nusantara is a fictional Indonesian wholesale distribution company specializing in FMCG, household products, and consumer goods.
 
-The company operates a Business-to-Business (B2B) distribution model, supplying products to:
+The company operates a Business-to-Business (B2B) distribution model, supplying:
 
 - Traditional retail stores.
 - Minimarkets and independent supermarkets.
@@ -70,42 +106,43 @@ The company operates a Business-to-Business (B2B) distribution model, supplying 
 - Corporate customers.
 - Food service and hospitality businesses.
 
-The company purchases products from local manufacturers, national suppliers, and international vendors before distributing them to customers through a network of regional warehouses.
+The company purchases products from local manufacturers, national suppliers, and selected international vendors before distributing them through regional warehouses.
 
-As the company expands, its operational complexity increases, particularly in inventory management, procurement planning, order fulfillment, financial control, and inter-warehouse coordination.
+The business currently relies on fragmented operational tools, spreadsheets, manual approval procedures, and partially integrated applications. These limitations affect inventory accuracy, procurement planning, order fulfillment, financial control, and management reporting.
 
-The current business environment relies on fragmented operational tools, spreadsheets, and partially integrated applications. This creates operational inefficiencies and limits management's ability to obtain accurate, real-time business information.
+The company intends to implement Odoo 19 Enterprise as its centralized ERP platform.
 
-The company therefore plans to implement an integrated Enterprise Resource Planning (ERP) system using Odoo 19 Enterprise.
+The implementation will connect the following business areas:
 
-The implementation aims to establish a centralized operational platform that connects:
-
-1. Sales Management.
-2. Purchase Management.
-3. Inventory and Warehouse Management.
-4. Supply Chain and Replenishment.
-5. Accounting and Financial Management.
-6. Customer Relationship Management.
-7. Vendor Management.
-8. Reporting and Business Intelligence.
-
-The system must support end-to-end business processes, from procurement planning and supplier purchasing through warehouse receiving, inventory allocation, order fulfillment, delivery, invoicing, and payment reconciliation.
+1. Master Data Management.
+2. Sales Management.
+3. Purchase Management.
+4. Inventory Management.
+5. Warehouse Management.
+6. Supply Chain and Replenishment.
+7. Inter-Warehouse Transfers.
+8. Quality Management.
+9. Logistics and Delivery.
+10. Returns and Reverse Logistics.
+11. Accounting and Financial Management.
+12. Credit Management.
+13. Vendor Performance Management.
+14. Reporting and Business Intelligence.
+15. Security and Internal Control.
 
 ## 1.2 Project Vision
 
-To establish a scalable, integrated, and data-driven distribution management system that improves operational efficiency, inventory accuracy, financial visibility, and customer service.
+To establish a scalable, integrated, and data-driven distribution management environment that improves operational efficiency, inventory accuracy, financial visibility, supplier performance, and customer service.
 
 ## 1.3 Project Objectives
-
-The project has the following business objectives:
 
 | ID | Objective | Expected Business Outcome |
 |---|---|---|
 | OBJ-001 | Centralize business operations | Unified ERP platform |
-| OBJ-002 | Improve inventory accuracy | More reliable inventory records |
+| OBJ-002 | Improve inventory accuracy | More reliable stock records |
 | OBJ-003 | Optimize procurement | Better purchasing decisions |
 | OBJ-004 | Improve warehouse efficiency | Faster picking and fulfillment |
-| OBJ-005 | Improve order management | Reduced order processing time |
+| OBJ-005 | Improve order management | Reduced order processing delays |
 | OBJ-006 | Strengthen financial control | Accurate receivables and payables |
 | OBJ-007 | Improve supplier management | Measurable vendor performance |
 | OBJ-008 | Improve management visibility | Centralized operational reporting |
@@ -114,10 +151,8 @@ The project has the following business objectives:
 
 ## 1.4 Expected Business Benefits
 
-The expected benefits include:
-
 - Reduced manual data entry.
-- Improved inventory visibility across all warehouses.
+- Improved inventory visibility across warehouses.
 - Reduced stock discrepancies.
 - Better control of expired and near-expiration products.
 - More accurate procurement planning.
@@ -142,9 +177,9 @@ The expected benefits include:
 | Legal Structure | Limited Liability Company (PT) |
 | Country | Indonesia |
 | Head Office | Jakarta, Indonesia |
-| Currency | Indonesian Rupiah (IDR) |
+| Currency | IDR |
 | Fiscal Year | January – December |
-| Business Model | Business-to-Business Distribution |
+| Business Model | B2B Distribution |
 | Number of Employees | 85 |
 | Active Customers | 250 |
 | Active Suppliers | 40 |
@@ -153,8 +188,6 @@ The expected benefits include:
 | Sales Territories | 5 |
 
 ## 2.2 Business Locations
-
-The company operates three distribution warehouses.
 
 | Warehouse ID | Warehouse Name | Location | Primary Function |
 |---|---|---|---|
@@ -198,8 +231,6 @@ The company operates three distribution warehouses.
 
 ## 2.4 Organizational Structure
 
-The company operates through the following departments:
-
 | Department | Primary Responsibilities |
 |---|---|
 | Executive Management | Business strategy and corporate oversight |
@@ -214,15 +245,15 @@ The company operates through the following departments:
 
 ## 2.5 Business Operating Model
 
-The company operates through the following business cycle:
+The company's primary operating cycle is:
 
 1. Demand identification.
 2. Inventory availability assessment.
 3. Procurement planning.
 4. Supplier quotation and selection.
-5. Purchase order creation.
+5. Purchase order creation and approval.
 6. Goods receiving.
-7. Quality and quantity verification.
+7. Quantity and quality verification.
 8. Inventory storage.
 9. Customer order creation.
 10. Stock reservation.
@@ -233,15 +264,13 @@ The company operates through the following business cycle:
 15. Financial reconciliation.
 16. Management reporting.
 
-The ERP system must provide integration and traceability across these processes.
-
 ---
 
 # 3. CURRENT BUSINESS CHALLENGES
 
 ## 3.1 Existing Operational Environment
 
-The company currently operates using a combination of:
+The fictional company currently uses:
 
 - Microsoft Excel for inventory records.
 - Spreadsheet-based purchasing plans.
@@ -250,8 +279,6 @@ The company currently operates using a combination of:
 - Manual warehouse stock reconciliation.
 - Email and messaging applications for supplier communication.
 - Manually prepared operational reports.
-
-These applications operate independently and do not provide a centralized view of business operations.
 
 ## 3.2 Identified Business Problems
 
@@ -272,8 +299,6 @@ These applications operate independently and do not provide a centralized view o
 
 ## 3.3 Root Cause Analysis
 
-The primary causes include:
-
 1. Lack of centralized business data.
 2. No standardized operational workflows.
 3. Limited system-based internal controls.
@@ -285,7 +310,7 @@ The primary causes include:
 
 ## 3.4 Business Transformation Requirements
 
-The ERP implementation must address these challenges through standardized business processes, automated workflows, centralized information, and appropriate internal controls.
+The ERP implementation must address these challenges through standardized processes, centralized information, automated controls, and reliable reporting.
 
 ---
 
@@ -293,16 +318,14 @@ The ERP implementation must address these challenges through standardized busine
 
 ## 4.1 In-Scope Business Areas
 
-The project includes the following business domains:
-
 | No. | Business Domain | Scope |
 |---|---|---|
 | 1 | Master Data Management | Products, customers, suppliers, and locations |
-| 2 | Sales Management | Quotation, sales orders, delivery, and invoicing |
+| 2 | Sales Management | Quotations, sales orders, delivery, and invoicing |
 | 3 | Purchase Management | RFQ, vendor selection, and purchase orders |
 | 4 | Inventory Management | Stock movement, adjustment, and traceability |
 | 5 | Warehouse Management | Receiving, putaway, picking, and packing |
-| 6 | Supply Chain | Replenishment and stock forecasting |
+| 6 | Supply Chain | Replenishment and stock planning |
 | 7 | Inter-Warehouse Transfers | Internal stock distribution |
 | 8 | Quality Management | Incoming and outgoing product inspections |
 | 9 | Logistics | Shipment and delivery coordination |
@@ -319,7 +342,7 @@ The following processes are excluded from the initial implementation:
 
 - Manufacturing and production planning.
 - Human Resources and payroll.
-- Full transportation management system (TMS).
+- Full Transportation Management System (TMS).
 - Fleet maintenance management.
 - Customer-facing mobile application development.
 - Direct integration with every Indonesian marketplace.
@@ -328,11 +351,7 @@ The following processes are excluded from the initial implementation:
 - Automated bank statement connections.
 - Advanced warehouse robotics integration.
 
-These capabilities may be considered for future implementation phases.
-
 ## 4.3 Implementation Approach
-
-The implementation will follow a phased approach:
 
 | Phase | Description |
 |---|---|
@@ -358,8 +377,6 @@ Establish a centralized and standardized master data repository to ensure consis
 
 ## 5.1.2 Product Master Management
 
-The system must support centralized product registration and classification.
-
 ### Product Categories
 
 | Category ID | Category | Example Products |
@@ -383,17 +400,16 @@ The system must support centralized product registration and classification.
 
 ### Business Requirements
 
-- Products must have unique internal references.
-- Products must be assigned to appropriate categories.
-- Products must support multiple units of measure where applicable.
-- Products must support barcode identification.
-- Products must support sales and purchase pricing.
-- Products must support vendor-specific purchasing information.
-- Selected products must support lot tracking.
-- Selected products must support serial number tracking.
-- Perishable products must have expiration date tracking.
-- Products must support reorder rules.
-- Product archival must not remove historical transaction records.
+- Unique internal product references.
+- Product categorization.
+- Multiple units of measure where applicable.
+- Barcode identification.
+- Sales and purchase pricing.
+- Vendor-specific purchasing information.
+- Lot and serial tracking for designated products.
+- Expiration date tracking for applicable products.
+- Reordering rules.
+- Historical transaction preservation after product archival.
 
 ## 5.1.3 Customer Master Management
 
@@ -409,15 +425,15 @@ The system must support centralized product registration and classification.
 
 ### Business Requirements
 
-- Each customer must have a unique customer reference.
-- Customer records must include contact information.
-- Customers must have assigned payment terms.
-- Customers must support individual credit limits.
-- Customers must have assigned sales representatives.
-- Customers must have designated delivery addresses.
-- Customers must support tax identification information.
-- Customers must be categorized according to customer type.
-- Customer transactions must be traceable.
+- Unique customer reference.
+- Contact and address information.
+- Payment terms.
+- Individual credit limits.
+- Assigned sales representatives.
+- Designated delivery addresses.
+- Tax identification information.
+- Customer type classification.
+- Traceable customer transactions.
 
 ## 5.1.4 Vendor Master Management
 
@@ -433,22 +449,18 @@ The system must support centralized product registration and classification.
 
 ### Business Requirements
 
-- Each supplier must have a unique vendor reference.
-- Supplier products and purchase prices must be maintained.
-- Supplier lead times must be recorded.
-- Supplier payment terms must be defined.
-- Supplier delivery performance must be measurable.
-- Supplier quality performance must be recorded.
-- Multiple vendors may supply the same product.
-- Supplier records must maintain historical purchasing information.
+- Unique vendor reference.
+- Supplier product and purchase price records.
+- Vendor lead times.
+- Supplier payment terms.
+- Delivery performance measurement.
+- Quality performance records.
+- Multiple vendors per product.
+- Historical purchasing information.
 
 ## 5.1.5 Warehouse and Location Master
 
-The system must support hierarchical warehouse locations.
-
-### Sample Warehouse Structure
-
-**WH-JKT – Jakarta Central Warehouse**
+### Sample Jakarta Warehouse Structure
 
 - WH-JKT/Stock
 - WH-JKT/Stock/Zone-A
@@ -465,12 +477,12 @@ Equivalent location structures will be established for Bandung and Surabaya.
 
 ### Business Requirements
 
-- Multiple warehouses must be supported.
-- Each warehouse must have multiple internal locations.
-- Warehouse locations must support barcode operations.
-- Storage locations must support product-specific restrictions.
-- Quarantine and damaged stock must be separated from available inventory.
-- Inventory movements must maintain source and destination references.
+- Multiple warehouses.
+- Hierarchical internal locations.
+- Barcode operations.
+- Product-specific storage restrictions.
+- Quarantine and damaged stock segregation.
+- Traceable source and destination inventory movements.
 
 ---
 
@@ -482,7 +494,7 @@ Establish a standardized sales process from quotation creation through order ful
 
 ## 5.2.2 Sales Business Model
 
-The company operates a B2B sales model with the following order types:
+Supported order types:
 
 1. Standard sales orders.
 2. Contract-based sales.
@@ -514,70 +526,124 @@ The company operates a B2B sales model with the following order types:
 
 | ID | Business Requirement | Priority |
 |---|---|---|
-| BR-SAL-001 | The system must support sales quotations. | Must |
-| BR-SAL-002 | The system must convert confirmed quotations into sales orders. | Must |
-| BR-SAL-003 | The system must support customer-specific pricing. | Must |
-| BR-SAL-004 | The system must support volume-based discounts. | Must |
-| BR-SAL-005 | The system must check product availability. | Must |
-| BR-SAL-006 | The system must reserve inventory for confirmed orders. | Must |
-| BR-SAL-007 | The system must support partial deliveries. | Must |
-| BR-SAL-008 | The system must support backorders. | Must |
-| BR-SAL-009 | The system must support sales returns. | Must |
-| BR-SAL-010 | The system must support multiple delivery addresses. | Should |
-| BR-SAL-011 | The system must support sales team assignments. | Must |
-| BR-SAL-012 | The system must maintain sales order history. | Must |
-| BR-SAL-013 | The system must support customer-specific payment terms. | Must |
-| BR-SAL-014 | The system must support sales performance reporting. | Should |
-| BR-SAL-015 | The system must support quotation expiration dates. | Should |
+| BR-SAL-001 | Support sales quotations | Must |
+| BR-SAL-002 | Convert confirmed quotations into sales orders | Must |
+| BR-SAL-003 | Support customer-specific pricing | Must |
+| BR-SAL-004 | Support volume-based discounts | Must |
+| BR-SAL-005 | Check product availability | Must |
+| BR-SAL-006 | Reserve inventory for confirmed orders | Must |
+| BR-SAL-007 | Support partial deliveries | Must |
+| BR-SAL-008 | Support backorders | Must |
+| BR-SAL-009 | Support sales returns | Must |
+| BR-SAL-010 | Support multiple delivery addresses | Should |
+| BR-SAL-011 | Support sales team assignments | Must |
+| BR-SAL-012 | Maintain sales order history | Must |
+| BR-SAL-013 | Support customer-specific payment terms | Must |
+| BR-SAL-014 | Support sales performance reporting | Should |
+| BR-SAL-015 | Support quotation expiration dates | Should |
 
 ## 5.2.5 Customer Credit Management
 
-The company requires credit control to prevent excessive outstanding receivables.
+### A. Credit Policy
 
-### Business Rules
+The company applies a credit limit to customers approved for credit transactions.
 
-- Each eligible customer must have an assigned credit limit.
-- The system must monitor outstanding customer receivables.
-- Sales orders exceeding the available credit limit must trigger a warning or approval requirement.
-- Overdue receivables must be visible to the Finance Department.
-- Credit limit exceptions must require authorized approval.
-- Customers with overdue balances beyond company policy may be restricted from new credit sales.
+Credit exposure is calculated as:
 
-### Example Scenario
+**Credit Exposure = Posted Outstanding Receivables + Open Confirmed Sales Orders Not Yet Invoiced**
+
+**Available Credit = Approved Credit Limit − Credit Exposure**
+
+The following items are treated as follows:
+
+| Item | Included in Credit Exposure? |
+|---|---|
+| Posted unpaid customer invoices | Yes |
+| Partially paid invoices | Yes, remaining balance only |
+| Open confirmed sales orders not yet invoiced | Yes |
+| Draft quotations | No |
+| Cancelled sales orders | No |
+| Fully paid invoices | No |
+| Unallocated customer credit notes | Not until reconciled or allocated |
+
+The exposure calculation must avoid double-counting the same commercial transaction. Once an order is invoiced, the corresponding open order commitment must no longer be counted separately if the invoice receivable represents the same obligation.
+
+### B. Credit Control Rules
+
+| Rule ID | Condition | System Action |
+|---|---|---|
+| CR-001 | Exposure is below or equal to 80% of limit | Normal processing |
+| CR-002 | Exposure exceeds 80% but does not exceed 100% | Warning to Sales Representative |
+| CR-003 | Exposure exceeds 100% | Credit hold; approval required |
+| CR-004 | Customer has an invoice overdue by more than 30 calendar days | Credit hold |
+| CR-005 | Customer has an invoice overdue by 1–30 calendar days | Warning and Finance review |
+| CR-006 | Customer is marked as blocked by Finance | No new credit order confirmation |
+
+### C. Credit Exception Approval
+
+| Condition | Approval Required |
+|---|---|
+| Exposure exceeds credit limit by up to IDR 25,000,000 | Finance Manager |
+| Exposure exceeds credit limit by more than IDR 25,000,000 | Finance Manager and Managing Director |
+| Customer overdue more than 30 days | Finance Manager |
+| Customer credit limit change | Finance Manager; Managing Director for increases above IDR 100,000,000 |
+
+An approval does not automatically increase the permanent credit limit. It authorizes only the specific transaction or exception unless a separate credit-limit amendment is approved.
+
+### D. Example Calculation
 
 Customer: PT Retail Makmur
 
 | Description | Amount |
 |---|---:|
 | Credit Limit | IDR 100,000,000 |
-| Existing Outstanding | IDR 75,000,000 |
-| New Sales Order | IDR 40,000,000 |
-| Projected Exposure | IDR 115,000,000 |
-| Credit Excess | IDR 15,000,000 |
+| Posted Outstanding Receivables | IDR 55,000,000 |
+| Open Confirmed Sales Orders | IDR 20,000,000 |
+| Total Credit Exposure | IDR 75,000,000 |
+| Available Credit | IDR 25,000,000 |
+| Exposure Utilization | 75% |
 
-Expected result:
+A new order of IDR 30,000,000 would result in exposure of IDR 105,000,000. The order must be placed on credit hold and routed for the required exception approval.
 
-The system must identify the credit limit violation and prevent normal confirmation until the appropriate authorization is obtained.
+### E. Credit Management Requirements
+
+- Each eligible customer must have an approved credit limit.
+- Credit exposure must be calculated from defined transaction sources.
+- Credit utilization must be visible to authorized users.
+- Overdue invoices must be monitored.
+- Orders exceeding the credit limit must be blocked from normal confirmation.
+- Credit exceptions must be recorded with approver, date, reason, and scope.
+- Credit limit changes must be auditable.
+- Finance must be able to release or block customers according to policy.
 
 ## 5.2.6 Pricing and Discount Management
 
-The company requires a structured pricing policy.
+### Customer Pricing Policy
 
-Example:
-
-| Customer Category | Discount Policy |
+| Customer Category | Pricing Policy |
 |---|---|
 | Retail Store | Standard pricing |
 | Wholesaler | Volume-based discount |
 | Supermarket | Contract pricing |
 | Corporate Customer | Negotiated pricing |
 
-Discount approval requirements:
+### Sales Discount Approval Matrix
 
-- Discounts within the authorized sales representative threshold may be applied directly.
-- Discounts exceeding the authorized threshold must require Sales Manager approval.
-- Exceptional pricing must be recorded.
-- Historical pricing must remain traceable.
+| Discount Range | Approval |
+|---|---|
+| 0%–5% | Sales Representative |
+| Above 5%–10% | Sales Supervisor |
+| Above 10%–15% | Sales Manager |
+| Above 15% | Sales Manager and Managing Director |
+
+Rules:
+
+- Discount percentages are evaluated per sales order line.
+- The highest applicable discount tier determines the required approval.
+- Discounts must not be hidden through manual price changes.
+- Exceptional pricing must include a reason.
+- Historical pricing and approvals must remain traceable.
+- The approval policy applies to the fictional portfolio scenario and must be validated in functional design.
 
 ---
 
@@ -589,7 +655,7 @@ Establish a controlled procurement process that ensures products are purchased a
 
 ## 5.3.2 Procurement Business Model
 
-Procurement activities are triggered by:
+Procurement activities may be triggered by:
 
 - Reorder rules.
 - Forecasted demand.
@@ -598,7 +664,7 @@ Procurement activities are triggered by:
 - Seasonal demand.
 - Management purchasing decisions.
 
-The company purchases from both domestic and international suppliers.
+The company purchases from domestic and international suppliers.
 
 ## 5.3.3 Purchase Process Flow
 
@@ -624,35 +690,53 @@ The company purchases from both domestic and international suppliers.
 
 | ID | Business Requirement | Priority |
 |---|---|---|
-| BR-PUR-001 | The system must support purchase requisitions. | Must |
-| BR-PUR-002 | The system must support RFQ creation. | Must |
-| BR-PUR-003 | The system must support multiple vendor quotations. | Must |
-| BR-PUR-004 | The system must compare vendor prices. | Must |
-| BR-PUR-005 | The system must maintain vendor lead times. | Must |
-| BR-PUR-006 | The system must support purchase approval workflows. | Must |
-| BR-PUR-007 | The system must support purchase order confirmation. | Must |
-| BR-PUR-008 | The system must support partial supplier deliveries. | Must |
-| BR-PUR-009 | The system must support purchase returns. | Must |
-| BR-PUR-010 | The system must maintain purchase history. | Must |
-| BR-PUR-011 | The system must support minimum order quantities. | Should |
-| BR-PUR-012 | The system must support vendor performance evaluation. | Should |
-| BR-PUR-013 | The system must support blanket purchase agreements. | Could |
-| BR-PUR-014 | The system must support supplier price lists. | Must |
+| BR-PUR-001 | Support purchase requisitions | Must |
+| BR-PUR-002 | Support RFQ creation | Must |
+| BR-PUR-003 | Support multiple vendor quotations | Must |
+| BR-PUR-004 | Compare vendor prices | Must |
+| BR-PUR-005 | Maintain vendor lead times | Must |
+| BR-PUR-006 | Support purchase approval workflows | Must |
+| BR-PUR-007 | Support purchase order confirmation | Must |
+| BR-PUR-008 | Support partial supplier deliveries | Must |
+| BR-PUR-009 | Support purchase returns | Must |
+| BR-PUR-010 | Maintain purchase history | Must |
+| BR-PUR-011 | Support minimum order quantities | Should |
+| BR-PUR-012 | Support vendor performance evaluation | Should |
+| BR-PUR-013 | Support blanket purchase agreements | Could |
+| BR-PUR-014 | Support supplier price lists | Must |
 
 ## 5.3.5 Purchase Approval Matrix
 
-| Purchase Value | Required Approval |
+The approval value is based on the total purchase order value before tax, after line discounts, expressed in IDR.
+
+| Purchase Order Value | Required Approval |
 |---|---|
-| IDR 0 – 10,000,000 | Procurement Supervisor |
-| IDR 10,000,001 – 50,000,000 | Procurement Manager |
-| IDR 50,000,001 – 150,000,000 | Operations Manager |
+| IDR 0–10,000,000 | Procurement Supervisor |
+| Above IDR 10,000,000–50,000,000 | Procurement Manager |
+| Above IDR 50,000,000–150,000,000 | Operations Manager |
 | Above IDR 150,000,000 | Managing Director |
 
-These thresholds are fictional business policy assumptions for the portfolio.
+### Approval Rules
+
+1. The applicable approval tier is determined by the final purchase order value.
+2. A purchase order cannot be confirmed before its required approval is completed.
+3. A change in quantity, unit price, discount, or other value-affecting field must trigger re-evaluation.
+4. If an amendment moves the order into a higher approval tier, the higher approver must approve it.
+5. The requester cannot approve their own purchase order.
+6. Cancelled purchase orders must retain their approval history.
+7. Splitting purchase orders to avoid approval thresholds is prohibited.
+8. Taxes and non-purchase ancillary costs are excluded from the approval threshold calculation unless explicitly included by a future policy change.
+
+### Approval Examples
+
+| PO Reference | PO Value | Approval Tier |
+|---|---:|---|
+| PO-2026-0001 | IDR 8,500,000 | Procurement Supervisor |
+| PO-2026-0002 | IDR 32,000,000 | Procurement Manager |
+| PO-2026-0003 | IDR 95,000,000 | Operations Manager |
+| PO-2026-0004 | IDR 210,000,000 | Managing Director |
 
 ## 5.3.6 Procurement Example
-
-The Jakarta warehouse requires additional mineral water inventory.
 
 | Description | Value |
 |---|---:|
@@ -666,9 +750,7 @@ The Jakarta warehouse requires additional mineral water inventory.
 | Estimated Purchase Value | IDR 12,500,000 |
 | Vendor Lead Time | 7 Days |
 
-Expected result:
-
-The system identifies the replenishment requirement, generates the purchasing proposal, and routes the purchase for approval.
+Expected result: The system identifies the replenishment requirement and routes the resulting purchase order to the Procurement Manager because its value is above IDR 10,000,000 and below or equal to IDR 50,000,000.
 
 ---
 
@@ -682,27 +764,25 @@ Provide accurate, real-time inventory visibility across all warehouses and estab
 
 | ID | Business Requirement | Priority |
 |---|---|---|
-| BR-INV-001 | The system must maintain real-time inventory balances. | Must |
-| BR-INV-002 | The system must support multiple warehouses. | Must |
-| BR-INV-003 | The system must support hierarchical storage locations. | Must |
-| BR-INV-004 | The system must support lot tracking. | Must |
-| BR-INV-005 | The system must support serial number tracking. | Must |
-| BR-INV-006 | The system must support expiration date tracking. | Must |
-| BR-INV-007 | The system must support FEFO allocation. | Must |
-| BR-INV-008 | The system must support FIFO valuation where appropriate. | Must |
-| BR-INV-009 | The system must support inventory adjustments. | Must |
-| BR-INV-010 | The system must support cycle counting. | Must |
-| BR-INV-011 | The system must support inventory reservations. | Must |
-| BR-INV-012 | The system must support damaged inventory segregation. | Must |
-| BR-INV-013 | The system must support inventory movement history. | Must |
-| BR-INV-014 | The system must support stock aging reports. | Should |
-| BR-INV-015 | The system must support inventory valuation reporting. | Must |
+| BR-INV-001 | Maintain real-time inventory balances | Must |
+| BR-INV-002 | Support multiple warehouses | Must |
+| BR-INV-003 | Support hierarchical storage locations | Must |
+| BR-INV-004 | Support lot tracking | Must |
+| BR-INV-005 | Support serial number tracking | Must |
+| BR-INV-006 | Support expiration date tracking | Must |
+| BR-INV-007 | Support FEFO allocation | Must |
+| BR-INV-008 | Support approved product-category costing methods | Must |
+| BR-INV-009 | Support inventory adjustments | Must |
+| BR-INV-010 | Support cycle counting | Must |
+| BR-INV-011 | Support inventory reservations | Must |
+| BR-INV-012 | Support damaged inventory segregation | Must |
+| BR-INV-013 | Maintain inventory movement history | Must |
+| BR-INV-014 | Support stock aging reports | Should |
+| BR-INV-015 | Support inventory valuation reporting | Must |
 
 ## 5.4.3 Lot and Expiration Management
 
-The company handles products with different shelf-life requirements.
-
-Example:
+### Sample Data
 
 | Product | Lot Number | Manufacturing Date | Expiration Date | Quantity |
 |---|---|---|---|---:|
@@ -710,40 +790,67 @@ Example:
 | Cooking Oil 1L | LOT-CO-001 | 15-Oct-2026 | 15-Oct-2027 | 1,500 |
 | Detergent 800g | LOT-DT-001 | 20-Oct-2026 | 20-Oct-2028 | 1,000 |
 
-Business rules:
+### Business Rules
 
 - Tracked products must have valid lot or serial identification.
-- Expiration dates must be recorded where applicable.
+- Expiration dates must be recorded for designated products.
 - Products approaching expiration must be identifiable.
 - Expired goods must not be allocated for normal sales delivery.
 - FEFO must be applied to eligible products.
-- Lot information must remain traceable throughout inventory movements.
+- Lot information must remain traceable through inventory movements.
 - Product recall must be supported through lot identification.
 
-## 5.4.4 Inventory Valuation
+### Expiration Alert Policy
 
-The company requires accurate inventory valuation for financial reporting.
+| Remaining Shelf Life | Status | Required Action |
+|---|---|---|
+| More than 90 days | Normal | Standard inventory management |
+| 61–90 days | Attention | Include in expiration monitoring report |
+| 31–60 days | Warning | Notify Inventory Controller and Sales Manager |
+| 1–30 days | Critical | Restrict allocation according to product policy and require review |
+| Expired | Blocked | Move or retain in quarantine; prohibit normal sales allocation |
 
-The following costing methods must be evaluated:
+The alert is calculated from the lot expiration date against the current system date.
 
-- FIFO.
-- AVCO (Average Cost).
+The company must maintain a minimum remaining shelf-life requirement for selected customers. The initial dummy policy is **90 days remaining shelf life at dispatch** for designated products, unless a customer contract specifies a stricter requirement.
 
-The final costing method must be assigned according to product category and approved accounting policy.
+A product may be physically present in stock but unavailable for allocation because it is expired, quarantined, damaged, or below the required remaining shelf life.
 
-Business requirements:
+## 5.4.4 Inventory Valuation and Costing Policy
 
-- Inventory valuation must be reflected in financial records.
-- Stock receipts and deliveries must create appropriate valuation entries.
-- Inventory adjustments must be financially traceable.
-- Inventory valuation reports must be available.
-- Cost changes must be auditable.
+The company uses perpetual inventory valuation for the portfolio scenario. Inventory movements must produce the relevant valuation and accounting effects according to the configured product category and accounting policy.
+
+### Product Category Costing Matrix
+
+| Product Category | Costing Method | Valuation Policy | Rationale |
+|---|---|---|---|
+| CAT-001 – Food & Beverage | FIFO | Automated | Supports cost-flow traceability for frequently replenished goods |
+| CAT-002 – Household Cleaning | AVCO | Automated | Simplifies average acquisition cost management |
+| CAT-003 – Personal Care | FIFO | Automated | Supports distinct receipt-cost layers |
+| CAT-004 – Kitchen Supplies | AVCO | Automated | Suitable for standardized products with recurring purchases |
+| CAT-005 – Consumer Goods | AVCO | Automated | Simplifies cost management for general consumer products |
+
+**Important distinction:**
+
+- FIFO and AVCO are financial inventory costing methods.
+- FEFO is a physical stock allocation strategy based on expiration dates.
+- FIFO physical removal and FEFO physical removal are not interchangeable.
+- A product may use FIFO valuation while warehouse picking follows FEFO.
+
+### Costing Policy Rules
+
+1. Costing method is assigned at product category level.
+2. A product inherits the valuation configuration of its category unless an approved exception is defined.
+3. Changes to costing configuration require Finance Manager approval.
+4. Costing changes must be evaluated for accounting and valuation impact before implementation.
+5. Inventory adjustments must generate traceable valuation effects.
+6. Landed costs must be included where eligible under the approved acquisition-cost policy.
+7. The company will not change the costing method for an existing category without documenting the reason and impact.
+8. Opening inventory values must be reconciled before the system is treated as financially operational.
 
 ## 5.4.5 Inventory Adjustment
 
-The company requires a controlled process for stock discrepancies.
-
-Example:
+### Example
 
 | Description | Quantity |
 |---|---:|
@@ -751,17 +858,30 @@ Example:
 | Physical Quantity | 970 |
 | Difference | -30 |
 
-Expected workflow:
+### Inventory Adjustment Approval Matrix
+
+| Absolute Inventory Difference Value | Required Approval |
+|---|---|
+| Up to IDR 1,000,000 | Warehouse Supervisor |
+| Above IDR 1,000,000–10,000,000 | Warehouse Manager |
+| Above IDR 10,000,000–50,000,000 | Operations Manager and Finance Manager |
+| Above IDR 50,000,000 | Managing Director and Finance Manager |
+
+The difference value is calculated using the inventory valuation cost of the affected quantity, not the sales price.
+
+### Workflow
 
 1. Warehouse identifies the discrepancy.
 2. Physical counting is recorded.
 3. Inventory adjustment is prepared.
-4. Supervisor reviews the discrepancy.
-5. Authorized personnel approve the adjustment.
-6. Inventory balance is updated.
-7. Financial impact is recorded where applicable.
+4. System calculates the quantity and estimated value difference.
+5. Required supervisor or manager reviews the discrepancy.
+6. Authorized personnel approve the adjustment.
+7. Inventory balance is updated.
+8. Financial impact is recorded where applicable.
+9. The adjustment history is retained.
 
-Material discrepancies must be escalated according to the approval matrix.
+No user may approve their own adjustment.
 
 ---
 
@@ -798,17 +918,6 @@ Improve warehouse efficiency through standardized receiving, storage, picking, p
 
 ## 5.5.3 Putaway Management
 
-The system must support location assignment based on:
-
-- Product category.
-- Storage requirements.
-- Warehouse capacity.
-- Product compatibility.
-- Storage zone.
-- Handling requirements.
-
-Example:
-
 | Product Category | Preferred Location |
 |---|---|
 | Food & Beverage | Zone A |
@@ -817,11 +926,9 @@ Example:
 | High-Value Goods | Secure Storage |
 | Damaged Goods | Quarantine |
 
+Location assignment must consider product category, storage requirements, capacity, compatibility, zone, and handling requirements.
+
 ## 5.5.4 Order Picking
-
-The warehouse must support structured picking operations.
-
-Requirements:
 
 - Picking operations must be generated from confirmed sales orders.
 - Stock must be reserved according to availability.
@@ -834,8 +941,6 @@ Requirements:
 
 ## 5.5.5 Packing and Dispatch
 
-Requirements:
-
 - Picked goods must be prepared for packing.
 - Packing operations must be linked to delivery orders.
 - Package identification must be supported.
@@ -845,31 +950,14 @@ Requirements:
 
 ## 5.5.6 Warehouse Operational Scenarios
 
-The implementation must demonstrate:
-
-**Scenario A – Standard Receiving**
-
-Supplier delivers 1,000 units against a confirmed purchase order.
-
-**Scenario B – Partial Receiving**
-
-Supplier delivers 700 units while 300 units remain outstanding.
-
-**Scenario C – Quality Rejection**
-
-Warehouse receives 500 units, of which 20 units are rejected.
-
-**Scenario D – FEFO Picking**
-
-Two lots of the same product have different expiration dates. The warehouse must prioritize the earliest-expiring eligible lot.
-
-**Scenario E – Short Picking**
-
-A customer orders 100 units, but only 80 units can be picked.
-
-**Scenario F – Damaged Goods**
-
-Warehouse discovers 15 damaged units during storage inspection and transfers them to a damaged inventory location.
+| Scenario | Description | Expected Result |
+|---|---|---|
+| WH-SCN-001 | Standard receiving of 1,000 units | Receipt recorded and stock updated |
+| WH-SCN-002 | Partial receiving of 700 out of 1,000 units | Remaining 300 units stay outstanding |
+| WH-SCN-003 | 20 of 500 units rejected | Rejected quantity segregated |
+| WH-SCN-004 | Two lots with different expiry dates | Earliest eligible expiry prioritized |
+| WH-SCN-005 | Customer orders 100 units, only 80 picked | Short pick and backorder recorded |
+| WH-SCN-006 | 15 damaged units discovered | Damaged stock segregated |
 
 ---
 
@@ -901,19 +989,23 @@ The company will use:
 | Maximum Stock | 5,000 Units |
 | Current Forecasted Stock | 800 Units |
 | Vendor Lead Time | 7 Days |
-| Replenishment Quantity | 4,200 Units |
+| Target Replenishment Quantity | 4,200 Units |
 
-The system must identify when forecasted stock falls below the minimum threshold and propose replenishment.
+The replenishment proposal is based on forecasted stock and the target maximum quantity, subject to purchase constraints and vendor minimum order quantities.
 
-The proposed quantity must consider the maximum stock level and relevant purchasing constraints.
+**Portfolio calculation:**
+
+Target replenishment quantity = Maximum stock − Forecasted stock
+
+= 5,000 − 800
+
+= 4,200 units.
+
+This example assumes there are no additional purchase orders or incoming transfers that would change forecasted stock.
 
 ## 5.6.4 Inter-Warehouse Replenishment
 
-The company must be able to transfer stock between warehouses.
-
-Example:
-
-Bandung warehouse has insufficient detergent stock, while Jakarta has surplus inventory.
+### Example
 
 | Description | Quantity |
 |---|---:|
@@ -923,7 +1015,7 @@ Bandung warehouse has insufficient detergent stock, while Jakarta has surplus in
 | Bandung Minimum Stock | 1,000 |
 | Proposed Transfer | 1,500 |
 
-Expected process:
+### Process
 
 1. Bandung identifies stock shortage.
 2. Replenishment requirement is generated.
@@ -937,14 +1029,14 @@ Expected process:
 
 ## 5.6.5 Business Requirements
 
-- Replenishment must be configurable by warehouse.
-- The system must support minimum and maximum stock rules.
-- The system must support safety stock.
-- Replenishment must consider vendor lead times.
-- Inter-warehouse transfers must be traceable.
-- Transfers must support partial shipments.
-- Transfer discrepancies must be recorded.
-- The system must provide replenishment reports.
+- Replenishment configurable by warehouse.
+- Minimum and maximum stock rules.
+- Safety stock.
+- Vendor lead-time consideration.
+- Traceable inter-warehouse transfers.
+- Partial transfer shipments.
+- Transfer discrepancy recording.
+- Replenishment reports.
 
 ---
 
@@ -952,46 +1044,99 @@ Expected process:
 
 ## 5.7.1 Business Objective
 
-Ensure that incoming and outgoing products comply with company quality requirements.
+Ensure that incoming and outgoing products comply with the company's defined quality requirements.
 
-## 5.7.2 Quality Inspection Scenarios
+## 5.7.2 Inspection Policy
 
-### Incoming Inspection
+Quality inspection is required for designated products and categories. Inspection criteria must be measurable and recorded against the related receipt, delivery, product, and lot where applicable.
 
-The company requires inspection for selected product categories.
+The initial portfolio policy applies mandatory incoming inspection to:
 
-Inspection parameters:
+- Food & Beverage.
+- Personal Care.
+- Selected Household Cleaning products.
+- High-value serialized goods.
 
-- Quantity verification.
-- Packaging condition.
-- Product appearance.
-- Lot identification.
-- Expiration date validity.
-- Product specification compliance.
+Outgoing inspection is mandatory for:
 
-### Outgoing Inspection
+- Lot-tracked products with customer-specific shelf-life requirements.
+- High-value goods.
+- Products with previous quality complaints.
+- Orders selected for additional quality sampling.
 
-Before dispatch, selected products must undergo verification.
+## 5.7.3 Incoming Quality Inspection Checklist
 
-Inspection parameters:
+| Check ID | Inspection Parameter | Acceptance Criteria | Result |
+|---|---|---|---|
+| IQ-001 | Product identity | Matches PO and product specification | Pass/Fail |
+| IQ-002 | Quantity | Physical quantity matches recorded accepted quantity | Pass/Fail |
+| IQ-003 | Packaging | No visible tears, leaks, deformation, or contamination | Pass/Fail |
+| IQ-004 | Product appearance | No visible damage, contamination, or abnormal appearance | Pass/Fail |
+| IQ-005 | Lot identification | Lot number is present and readable for tracked products | Pass/Fail |
+| IQ-006 | Expiration date | Expiration date is present and valid | Pass/Fail |
+| IQ-007 | Remaining shelf life | At least 90 days for designated products | Pass/Fail |
+| IQ-008 | Serial identification | Serial number present and unique for serialized products | Pass/Fail |
 
-- Correct product.
-- Correct quantity.
-- Correct lot.
-- Acceptable packaging condition.
-- Customer-specific requirements.
+### Sampling Assumption
 
-## 5.7.3 Business Requirements
+For the portfolio scenario, the default incoming inspection sample size is:
+
+- Deliveries up to 100 units: inspect at least 5 units.
+- Deliveries of 101–1,000 units: inspect at least 10 units.
+- Deliveries above 1,000 units: inspect at least 20 units.
+
+The quantity verification and packaging checks apply to the full shipment where operationally possible. Sampling applies to detailed appearance and product-condition inspection.
+
+Any critical defect discovered in the sample triggers a hold on the affected lot until the Quality Inspector determines the disposition.
+
+## 5.7.4 Outgoing Quality Inspection Checklist
+
+| Check ID | Inspection Parameter | Acceptance Criteria |
+|---|---|---|
+| OQ-001 | Product identity | Matches sales order |
+| OQ-002 | Quantity | Matches picking and delivery quantity |
+| OQ-003 | Lot selection | Valid and eligible lot |
+| OQ-004 | Expiration date | Not expired |
+| OQ-005 | Remaining shelf life | Meets applicable customer requirement |
+| OQ-006 | Packaging condition | No visible damage or leakage |
+| OQ-007 | Customer specification | All mandatory order-specific requirements met |
+
+All mandatory outgoing inspection criteria must pass before dispatch for orders subject to inspection.
+
+## 5.7.5 Defect Classification
+
+| Severity | Example | Required Action |
+|---|---|---|
+| Critical | Expired product, contamination, incorrect product identity | Reject or quarantine affected goods |
+| Major | Damaged packaging affecting product protection, missing lot identity | Hold and investigate |
+| Minor | Cosmetic packaging defect without product impact | Record and obtain authorized disposition |
+
+## 5.7.6 Quality Disposition Rules
+
+| Inspection Result | Inventory Disposition |
+|---|---|
+| Pass | Release to available stock |
+| Fail – Critical | Quarantine or reject |
+| Fail – Major | Quarantine pending review |
+| Fail – Minor | Release only after authorized disposition |
+| Pending | Remain in quality inspection location |
+
+A Quality Inspector cannot independently approve the commercial or financial write-off of rejected goods. Such decisions follow the relevant approval matrix.
+
+## 5.7.7 Quality Requirements
 
 | ID | Requirement |
 |---|---|
-| BR-QUA-001 | The system must support incoming quality inspections. |
-| BR-QUA-002 | The system must support outgoing quality inspections. |
-| BR-QUA-003 | The system must record inspection results. |
-| BR-QUA-004 | The system must support pass/fail decisions. |
-| BR-QUA-005 | Rejected products must be segregated. |
-| BR-QUA-006 | Quality records must be traceable to source documents. |
-| BR-QUA-007 | Quality defects must be reportable. |
+| BR-QUA-001 | Support incoming quality inspections |
+| BR-QUA-002 | Support outgoing quality inspections |
+| BR-QUA-003 | Record inspection results |
+| BR-QUA-004 | Support pass/fail decisions |
+| BR-QUA-005 | Segregate rejected products |
+| BR-QUA-006 | Link quality records to source documents |
+| BR-QUA-007 | Report quality defects |
+| BR-QUA-008 | Support defined inspection checklists |
+| BR-QUA-009 | Record defect severity and disposition |
+| BR-QUA-010 | Maintain inspector, date, and approval history |
 
 ---
 
@@ -1015,27 +1160,27 @@ Establish a controlled distribution process that ensures customer orders are del
 
 ## 5.8.3 Delivery Requirements
 
-- Delivery orders must be linked to sales orders.
-- Delivery addresses must be configurable.
-- Partial shipments must be supported.
-- Delivery status must be traceable.
-- Proof of delivery must be recorded.
-- Delivery discrepancies must be documented.
-- Shipping costs must be recorded.
-- Customer delivery performance must be measurable.
+- Delivery orders linked to sales orders.
+- Configurable delivery addresses.
+- Partial shipments.
+- Traceable delivery status.
+- Proof of delivery.
+- Delivery discrepancy documentation.
+- Shipping cost recording.
+- Customer delivery performance measurement.
 
 ## 5.8.4 Delivery Performance KPIs
 
-The company will monitor:
+| KPI | Definition |
+|---|---|
+| On-Time Delivery Rate | Percentage of eligible deliveries completed on or before promised delivery date |
+| Order Fulfillment Rate | Percentage of ordered quantity delivered |
+| Delivery Accuracy | Percentage of deliveries completed without product or quantity discrepancy |
+| Average Delivery Lead Time | Average elapsed time from dispatch to delivery confirmation |
+| Partial Delivery Rate | Percentage of orders requiring more than one shipment |
+| Failed Delivery Rate | Percentage of dispatched deliveries that fail to reach the customer |
 
-- On-Time Delivery Rate.
-- Order Fulfillment Rate.
-- Delivery Accuracy.
-- Average Delivery Lead Time.
-- Partial Delivery Rate.
-- Failed Delivery Rate.
-
-Advanced route optimization and vehicle tracking are not included in the initial implementation.
+Advanced route optimization and vehicle tracking are excluded from the initial implementation.
 
 ---
 
@@ -1046,8 +1191,6 @@ Advanced route optimization and vehicle tracking are not included in the initial
 Establish standardized processes for handling customer returns and supplier returns.
 
 ## 5.9.2 Customer Return Scenarios
-
-Common return reasons include:
 
 - Damaged products.
 - Incorrect products delivered.
@@ -1080,14 +1223,14 @@ Common return reasons include:
 
 ## 5.9.5 Business Requirements
 
-- Return requests must be documented.
-- Return reasons must be categorized.
-- Returns must reference original transactions.
-- Returned goods must undergo inspection.
-- Return quantities must be traceable.
-- Credit notes must be supported.
-- Supplier replacement goods must be traceable.
-- Return performance must be reportable.
+- Return requests documented.
+- Return reasons categorized.
+- Returns reference original transactions.
+- Returned goods undergo inspection.
+- Return quantities traceable.
+- Credit notes supported.
+- Supplier replacement goods traceable.
+- Return performance reportable.
 
 ---
 
@@ -1120,7 +1263,7 @@ The system must support:
 
 1. Sales order is confirmed.
 2. Delivery is validated.
-3. Customer invoice is generated according to the company's invoicing policy.
+3. Customer invoice is generated according to company invoicing policy.
 4. Receivable is recorded.
 5. Customer payment is received.
 6. Payment reconciliation is completed.
@@ -1143,15 +1286,26 @@ The system must support:
 4. Inventory valuation decreases.
 5. Cost of Goods Sold is recognized according to the configured accounting policy.
 
-## 5.10.4 Three-Way Matching
+## 5.10.4 Three-Way Matching Policy
 
-The company requires a three-way matching control between:
+The company requires matching between:
 
 1. Purchase Order.
 2. Goods Receipt.
 3. Vendor Bill.
 
-Example:
+### Matching Tolerances
+
+| Matching Dimension | Allowed Tolerance | Action if Exceeded |
+|---|---:|---|
+| Invoiced quantity | No more than received quantity | Hold for review |
+| Unit price difference | 1% or IDR 50,000, whichever is lower | Finance review |
+| Total invoice difference | 1% of matched PO value | Finance Manager approval |
+| Unreceived quantity | No invoice matching beyond received quantity without exception | Hold for review |
+
+For the portfolio baseline, vendor bills must not be approved automatically when invoiced quantity exceeds received quantity.
+
+### Example
 
 | Document | Quantity | Unit Price |
 |---|---:|---:|
@@ -1159,26 +1313,37 @@ Example:
 | Goods Receipt | 1,000 | IDR 2,500 |
 | Vendor Bill | 1,000 | IDR 2,500 |
 
-Expected result:
+Expected result: The documents match and can proceed through the normal approval process.
 
-The system must identify discrepancies between ordered, received, and invoiced quantities and values.
+A mismatch must create an exception record with its reason, amount, responsible reviewer, and resolution.
 
-Exceptions must be reviewed by authorized Finance or Procurement personnel.
+## 5.10.5 Indonesian Tax Configuration Assumptions
 
-## 5.10.5 Tax Management
+The company operates in Indonesia. The ERP must support configurable Indonesian tax handling.
 
-The company operates in Indonesia and requires configurable tax handling.
+### Portfolio Tax Configuration
 
-The implementation must consider:
+The following values are illustrative configuration assumptions for testing only. They are not a representation of the applicable statutory tax rate or a tax determination for a real company.
 
-- Applicable VAT/PPN.
-- Tax-inclusive and tax-exclusive pricing.
-- Input tax.
-- Output tax.
-- Tax invoice references.
-- Tax reporting requirements.
+| Tax Code | Description | Illustrative Rate | Application |
+|---|---|---:|---|
+| TAX-PPN-OUT | Output VAT / PPN | 11% | Standard taxable sales scenario |
+| TAX-PPN-IN | Input VAT / PPN | 11% | Standard taxable purchase scenario |
+| TAX-PPN-EXEMPT | Exempt / non-taxable scenario | 0% | Dummy exempt transaction |
+| TAX-PPN-IMPORT | Import VAT scenario | 11% | Dummy import transaction |
 
-Actual tax rates and accounting treatment must be confirmed against applicable Indonesian regulations during implementation.
+### Tax Configuration Rules
+
+1. Tax rates must be configurable rather than hard-coded in custom business logic.
+2. Tax mapping must be assigned to the relevant products, customers, vendors, and transaction types.
+3. Input and output taxes must be recorded separately.
+4. Tax-inclusive and tax-exclusive pricing must be supported where required.
+5. Tax invoice references must be recorded where applicable.
+6. Tax calculations must be validated against the applicable rules before production use.
+7. The Finance Manager is responsible for approving the portfolio tax configuration.
+8. Any actual deployment must use rates, tax bases, exemptions, documentation, and accounting treatment validated by a qualified Indonesian tax professional and current regulations.
+
+**Important:** The illustrative 11% value is selected to make the dummy scenarios executable and testable. It must not be treated as confirmation of the correct tax treatment for a real transaction in 2026.
 
 ## 5.10.6 Financial Reporting
 
@@ -1201,13 +1366,9 @@ The system must provide:
 
 ## 5.11.1 Business Objective
 
-Ensure that imported products reflect their actual acquisition costs, including additional procurement and logistics expenses.
+Ensure that imported products reflect their eligible acquisition costs, including additional procurement and logistics expenses.
 
 ## 5.11.2 Landed Cost Components
-
-The company imports selected products from international suppliers.
-
-Applicable cost components may include:
 
 - International freight.
 - Insurance.
@@ -1219,8 +1380,6 @@ Applicable cost components may include:
 
 ## 5.11.3 Example Scenario
 
-An import purchase is made from Shenzhen Trading Co.
-
 | Cost Component | Amount |
 |---|---:|
 | Product Purchase Value | IDR 100,000,000 |
@@ -1231,17 +1390,19 @@ An import purchase is made from Shenzhen Trading Co.
 | Domestic Transportation | IDR 3,000,000 |
 | Total Acquisition Cost | IDR 126,000,000 |
 
-The system must support the allocation of eligible landed costs to received inventory using an approved allocation method.
+## 5.11.4 Allocation Policy
 
-Possible allocation methods:
+| Cost Type | Default Allocation Method | Reason |
+|---|---|---|
+| International Freight | By weight | Reflects transportation cost driver |
+| Insurance | By current cost | Reflects insured goods value |
+| Customs-related charges | By current cost | Reflects declared goods value assumption |
+| Port Handling | By quantity | Simplified dummy allocation |
+| Domestic Transportation | By weight | Reflects distribution cost driver |
 
-- Equal.
-- By quantity.
-- By current cost.
-- By weight.
-- By volume.
+The allocation method is a portfolio assumption. Actual allocation must follow the nature of the charge and the company's approved accounting policy.
 
-The selected allocation method must reflect the actual cost structure.
+Landed costs must be allocated only to eligible inventory and must be auditable.
 
 ---
 
@@ -1251,27 +1412,109 @@ The selected allocation method must reflect the actual cost structure.
 
 Provide measurable supplier evaluation to support procurement decisions.
 
-## 5.12.2 Vendor Evaluation Criteria
+## 5.12.2 KPI Definitions and Formulas
 
-| KPI | Measurement |
+The vendor performance evaluation period is monthly, with a rolling three-month view available for management analysis.
+
+| KPI | Formula | Data Source |
+|---|---|---|
+| On-Time Delivery Rate | On-time eligible receipts ÷ total eligible receipts × 100 | Purchase orders and validated receipts |
+| Order Fulfillment Rate | Accepted quantity received ÷ quantity due in the evaluation period × 100 | Purchase order lines and receipts |
+| Quality Acceptance Rate | Accepted quantity ÷ inspected quantity × 100 | Quality inspection records |
+| Lead Time Reliability | Receipts within agreed lead-time tolerance ÷ eligible receipts × 100 | PO confirmation and receipt dates |
+| Purchase Price Variance | (Actual unit price − reference unit price) ÷ reference unit price × 100 | Purchase order lines and vendor price history |
+
+### KPI Measurement Rules
+
+**On-Time Delivery**
+
+- Promised date is the confirmed vendor delivery date recorded on the purchase order.
+- Actual date is the date the goods are physically received and the receipt is validated.
+- A receipt is on time when the actual receipt date is on or before the promised date.
+- Each purchase order receipt is evaluated at receipt level.
+- Cancelled orders are excluded.
+
+**Order Fulfillment Rate**
+
+- The denominator is the quantity due during the evaluation period.
+- The numerator is the accepted quantity received against that due quantity.
+- Rejected quantities do not count as accepted fulfillment.
+- Outstanding quantities remain unfulfilled until received or formally cancelled.
+
+**Quality Acceptance Rate**
+
+- The numerator is the quantity accepted by Quality.
+- The denominator is the quantity inspected.
+- Items not inspected are excluded from this KPI and reported separately.
+
+**Lead Time Reliability**
+
+- Planned lead time is the confirmed number of calendar days between the PO confirmation date and promised receipt date.
+- Actual lead time is the number of calendar days between PO confirmation and validated receipt.
+- The receipt is considered within tolerance if actual lead time is no more than planned lead time plus one calendar day.
+
+**Purchase Price Variance**
+
+- Reference unit price is the latest approved reference price for the same product and purchase UoM at the start of the evaluation period.
+- Negative variance means the purchase price is lower than the reference price.
+- Positive variance means the purchase price is higher than the reference price.
+- This KPI is an indicator, not a standalone vendor quality score.
+
+## 5.12.3 Vendor Scorecard
+
+For management comparison, the portfolio uses the following weighted score:
+
+| KPI | Weight |
+|---|---:|
+| On-Time Delivery Rate | 30% |
+| Order Fulfillment Rate | 25% |
+| Quality Acceptance Rate | 30% |
+| Lead Time Reliability | 15% |
+| Total | 100% |
+
+The Purchase Price Variance is displayed separately and is not included in the weighted score to avoid treating a low price as automatically equivalent to better supplier performance.
+
+**Vendor Score = (OTD × 30%) + (Fulfillment × 25%) + (Quality Acceptance × 30%) + (Lead Time Reliability × 15%)**
+
+### Performance Classification
+
+| Score | Classification |
 |---|---|
-| On-Time Delivery | Percentage of deliveries received on schedule |
-| Order Fulfillment | Percentage of ordered quantities delivered |
-| Quality Acceptance | Percentage of accepted products |
-| Price Competitiveness | Comparison against historical and alternative vendor pricing |
-| Lead Time Reliability | Actual versus promised delivery lead time |
+| 95%–100% | Excellent |
+| 90%–94.99% | Good |
+| 80%–89.99% | Needs Improvement |
+| Below 80% | Poor |
 
-## 5.12.3 Example Vendor Evaluation
+A vendor with fewer than five eligible receipts in the evaluation period must be marked **Insufficient Data** rather than being assigned a definitive performance classification.
+
+## 5.12.4 Example Vendor Evaluation
 
 | KPI | Target | Actual |
 |---|---:|---:|
 | On-Time Delivery | 95% | 92% |
 | Order Fulfillment | 98% | 97% |
 | Quality Acceptance | 99% | 98% |
+| Lead Time Reliability | 95% | 94% |
 
-The system must provide vendor performance visibility to the Procurement Department.
+Illustrative weighted score:
 
-The evaluation must be based on actual historical transaction data rather than manually entered ratings alone.
+= (92% × 30%) + (97% × 25%) + (98% × 30%) + (94% × 15%)
+
+= 27.60% + 24.25% + 29.40% + 14.10%
+
+= **95.35% – Excellent**
+
+The result is a dummy example, not a real supplier performance result.
+
+## 5.12.5 Business Requirements
+
+- Vendor performance must be calculated from historical transactions.
+- KPI definitions must be consistent.
+- Users must be able to filter by vendor and evaluation period.
+- Insufficient data must be clearly identified.
+- KPI calculations must be traceable to source records.
+- Procurement must be able to review the underlying transactions.
+- Manual changes to calculated KPI results must be restricted and audited.
 
 ---
 
@@ -1301,7 +1544,18 @@ Improve customer relationship management and provide visibility into sales oppor
 | Silver | Medium-volume customers |
 | Standard | Small retail customers |
 
-Customer segmentation must be based on approved business criteria such as sales volume, profitability, and commercial agreements.
+### Portfolio Segmentation Rules
+
+The following thresholds are dummy assumptions based on annual net sales:
+
+| Segment | Annual Net Sales |
+|---|---:|
+| Platinum | At least IDR 2,000,000,000 |
+| Gold | IDR 1,000,000,000–1,999,999,999 |
+| Silver | IDR 250,000,000–999,999,999 |
+| Standard | Below IDR 250,000,000 |
+
+Customer segmentation is reviewed quarterly. Management may approve a manual strategic classification, but the reason and approver must be recorded.
 
 ---
 
@@ -1313,7 +1567,7 @@ Establish accountability and prevent unauthorized business transactions.
 
 ## 5.14.2 Approval Requirements
 
-The system must support controlled approvals for:
+Controlled approvals are required for:
 
 - Purchase orders.
 - Sales discounts.
@@ -1323,25 +1577,42 @@ The system must support controlled approvals for:
 - Supplier returns.
 - Customer refunds.
 - Exceptional pricing.
+- Credit limit amendments.
 
 ## 5.14.3 Segregation of Duties
-
-The company requires separation between transaction preparation, review, approval, and execution.
-
-Example:
 
 | Process | Responsible Role | Approval Role |
 |---|---|---|
 | Purchase Requisition | Procurement Staff | Procurement Supervisor |
-| Purchase Order | Procurement Officer | Authorized Manager |
-| Inventory Adjustment | Warehouse Staff | Warehouse Manager |
-| Credit Exception | Sales Staff | Finance Manager |
+| Purchase Order | Procurement Officer | Applicable Purchase Approver |
+| Inventory Adjustment | Warehouse Staff | Applicable Inventory Approver |
+| Credit Exception | Sales Staff | Finance Manager / Managing Director |
 | Customer Refund | Customer Service | Finance Manager |
 | Vendor Payment | Accounts Payable | Finance Manager |
 
-A user must not be able to approve their own transaction when the relevant segregation-of-duties policy prohibits it.
+A user must not approve their own transaction where the relevant segregation-of-duties policy prohibits it.
 
-## 5.14.4 Audit Trail
+## 5.14.4 Approval Policy Summary
+
+| Transaction | Approval Basis | Approval Policy |
+|---|---|---|
+| Purchase Order | PO value before tax | Purchase Approval Matrix |
+| Sales Discount | Discount percentage per line | Sales Discount Matrix |
+| Credit Exception | Exposure and overdue status | Credit Management Policy |
+| Inventory Adjustment | Absolute inventory difference value | Inventory Adjustment Matrix |
+| Customer Refund | Refund amount | Refund Approval Matrix |
+| Supplier Return | Estimated return value | Purchase Approval Matrix or delegated authority |
+
+### Customer Refund Approval Matrix
+
+| Refund Value | Required Approval |
+|---|---|
+| Up to IDR 5,000,000 | Customer Service Supervisor and Finance review |
+| Above IDR 5,000,000–25,000,000 | Finance Manager |
+| Above IDR 25,000,000–100,000,000 | Finance Manager and Operations Manager |
+| Above IDR 100,000,000 | Managing Director and Finance Manager |
+
+## 5.14.5 Audit Trail
 
 The system must maintain:
 
@@ -1352,6 +1623,8 @@ The system must maintain:
 - Inventory movement history.
 - User activity references.
 - Relevant financial transaction references.
+- Credit exception history.
+- Quality disposition history.
 
 ---
 
@@ -1359,78 +1632,133 @@ The system must maintain:
 
 ## 5.15.1 Business Objective
 
-Provide management with reliable operational and financial insights.
+Provide management with reliable operational and financial insights based on consistent transactional data.
 
-## 5.15.2 Required Management Dashboards
+## 5.15.2 Dashboard Definitions and KPI Formulas
 
-### Inventory Dashboard
+### A. Inventory Dashboard
 
-- Total inventory quantity.
-- Total inventory valuation.
-- Stock availability.
-- Below-minimum stock.
-- Overstocked products.
-- Near-expiration products.
-- Expired products.
-- Inventory aging.
-- Warehouse stock comparison.
+| KPI | Formula / Definition | Primary Data Source |
+|---|---|---|
+| Total Inventory Quantity | Sum of on-hand quantity for selected internal locations | Inventory quants |
+| Total Inventory Valuation | Sum of inventory valuation for selected scope | Stock valuation records |
+| Available Stock | On-hand quantity minus reserved quantity | Inventory quants and reservations |
+| Below-Minimum Stock | Count of product-warehouse combinations with forecasted stock below minimum | Reordering rules and forecasted quantity |
+| Overstocked Products | Count of product-warehouse combinations with forecasted stock above maximum | Reordering rules and forecasted quantity |
+| Near-Expiration Quantity | Quantity in lots expiring within 90 days | Lot/expiration and stock records |
+| Expired Quantity | Quantity in lots with expiration date earlier than report date | Lot/expiration and stock records |
+| Inventory Aging | Quantity and value grouped by time since receipt | Stock movement and valuation history |
+| Warehouse Stock Comparison | On-hand quantity or valuation grouped by warehouse | Inventory records |
 
-### Sales Dashboard
+**Inventory scope rules:**
 
-- Total sales revenue.
-- Sales by customer.
-- Sales by product.
-- Sales by territory.
-- Sales by salesperson.
-- Sales order fulfillment.
-- Outstanding customer invoices.
-- Sales return analysis.
+- Internal warehouse locations are included.
+- Supplier, customer, transit, and virtual adjustment locations are excluded from on-hand internal stock unless a report explicitly requests them.
+- Quarantined and damaged inventory must be displayed separately from available stock.
+- Inventory valuation must use accounting valuation records rather than sales prices.
 
-### Procurement Dashboard
+### B. Sales Dashboard
 
-- Total purchasing value.
-- Purchase orders by vendor.
-- Purchase orders by status.
-- Vendor delivery performance.
-- Purchase price trends.
-- Outstanding purchase orders.
-- Procurement lead time.
+| KPI | Formula / Definition | Primary Data Source |
+|---|---|---|
+| Net Sales Revenue | Posted sales invoice untaxed amount minus posted sales credit notes untaxed amount | Customer invoices and credit notes |
+| Sales by Customer | Net sales grouped by customer | Customer invoices |
+| Sales by Product | Net sales grouped by invoice product line | Invoice lines |
+| Sales by Territory | Net sales grouped by assigned customer territory | Customer master and invoice lines |
+| Sales by Salesperson | Net sales grouped by responsible salesperson | Sales orders and invoice lines |
+| Sales Order Fulfillment | Delivered quantity ÷ ordered quantity × 100 | Sales order lines and delivery records |
+| Outstanding Receivables | Posted receivable balances not fully reconciled | Accounting receivable lines |
+| Sales Return Analysis | Return quantity and value grouped by return reason | Return records and credit notes |
 
-### Warehouse Dashboard
+**Sales revenue rules:**
 
-- Incoming goods volume.
-- Outgoing goods volume.
-- Picking productivity.
-- Packing productivity.
-- Inventory discrepancies.
-- Stock transfer performance.
-- Return processing volume.
+- Draft and cancelled invoices are excluded.
+- Posted credit notes reduce net sales.
+- Taxes are excluded from net sales revenue.
+- The dashboard period is based on invoice date unless a report explicitly uses order date or delivery date.
 
-### Financial Dashboard
+### C. Procurement Dashboard
 
-- Accounts receivable.
-- Accounts payable.
-- Overdue receivables.
-- Cash and bank balances.
-- Gross profit.
-- Inventory valuation.
-- Profit and loss.
+| KPI | Formula / Definition | Primary Data Source |
+|---|---|---|
+| Total Purchasing Value | Confirmed PO untaxed value for selected period | Purchase orders |
+| PO by Vendor | PO count and value grouped by vendor | Purchase orders |
+| PO by Status | Count of PO grouped by current status | Purchase orders |
+| Vendor Delivery Performance | Vendor KPI formulas defined in Section 5.12 | PO and receipt records |
+| Purchase Price Trend | Weighted average purchase unit price by product and period | Purchase order lines |
+| Outstanding PO Value | Confirmed PO value not yet fully received or cancelled | Purchase orders and receipts |
+| Procurement Lead Time | Average days between PO confirmation and validated receipt | Purchase and stock records |
 
-## 5.15.3 Reporting Requirements
+### D. Warehouse Dashboard
 
-- Reports must support date filtering.
-- Reports must support warehouse filtering.
-- Reports must support product category filtering.
-- Reports must support customer and vendor filtering.
-- Reports must provide export capabilities where appropriate.
-- Financial reports must use validated accounting data.
-- Management dashboards must reflect the underlying transactional records.
+| KPI | Formula / Definition | Primary Data Source |
+|---|---|---|
+| Incoming Goods Volume | Quantity received during selected period | Validated receipts |
+| Outgoing Goods Volume | Quantity dispatched during selected period | Validated deliveries |
+| Picking Productivity | Total picked lines or units divided by recorded picking hours | Picking records and time records where available |
+| Packing Productivity | Total packed packages divided by recorded packing hours | Packing records and time records where available |
+| Inventory Discrepancies | Count and value of approved inventory adjustments | Inventory adjustment records |
+| Stock Transfer Performance | Completed transfer quantity ÷ requested transfer quantity × 100 | Internal transfer records |
+| Return Processing Volume | Number and quantity of processed return records | Return records |
+
+Where time data is not captured, productivity must be shown as transaction volume only and must not be presented as units per hour.
+
+### E. Financial Dashboard
+
+| KPI | Formula / Definition | Primary Data Source |
+|---|---|---|
+| Accounts Receivable | Outstanding posted receivable balances | General ledger |
+| Accounts Payable | Outstanding posted payable balances | General ledger |
+| Overdue Receivables | Receivable balances past due date | Receivable aging |
+| Cash and Bank Balances | Posted cash and bank account balances | General ledger |
+| Gross Profit | Net sales revenue minus recognized COGS | Accounting entries |
+| Inventory Valuation | Posted inventory valuation | Stock valuation records |
+| Profit and Loss | Standard financial statement calculation | General ledger |
+
+## 5.15.3 Dashboard Refresh and Data Governance
+
+| Report Type | Expected Refresh |
+|---|---|
+| Operational stock indicators | Near real-time after validated stock transactions |
+| Sales and procurement transaction reports | On-demand from transactional records |
+| Vendor scorecard | Monthly calculation |
+| Financial statements | Based on posted accounting entries |
+| Management KPI summary | Daily refresh for the portfolio dashboard |
+
+All dashboard figures must be traceable to their source records.
+
+A dashboard must not display a KPI as actual performance when the underlying source data is incomplete or unavailable. In that situation, the report must show an appropriate status such as **Insufficient Data**, **Not Available**, or **Pending Reconciliation**.
+
+## 5.15.4 Reporting Requirements
+
+- Date filtering.
+- Warehouse filtering.
+- Product category filtering.
+- Customer and vendor filtering.
+- Export capabilities where appropriate.
+- Financial reports based on validated accounting data.
+- Dashboard metrics traceable to underlying records.
+- Consistent KPI definitions across reports.
+- Access restrictions according to user roles.
 
 ---
 
 # 6. END-TO-END BUSINESS SCENARIOS
 
-This section defines the integrated business scenarios that must be demonstrated during implementation.
+The following scenarios are mandatory portfolio demonstration scenarios.
+
+| Scenario ID | Scenario | Primary Business Domains |
+|---|---|---|
+| E2E-001 | Procure to Pay | Procurement, Inventory, Quality, Accounting |
+| E2E-002 | Order to Cash | Sales, Inventory, Warehouse, Accounting |
+| E2E-003 | Multi-Warehouse Replenishment | Inventory, Warehouse, Supply Chain |
+| E2E-004 | Lot and Expiration Management | Inventory, Warehouse, Quality |
+| E2E-005 | Customer Credit Limit Violation | Sales, Credit Management, Finance |
+| E2E-006 | Supplier Delivery Discrepancy | Procurement, Warehouse, Quality |
+| E2E-007 | Customer Return and Refund | Sales, Returns, Warehouse, Finance |
+| E2E-008 | Imported Goods and Landed Costs | Procurement, Inventory, Accounting |
+| E2E-009 | Inventory Adjustment and Cycle Counting | Inventory, Warehouse, Accounting |
+| E2E-010 | Vendor Performance Evaluation | Procurement, Quality, Reporting |
 
 ## 6.1 Scenario 01 – Procure to Pay (P2P)
 
@@ -1557,7 +1885,7 @@ Business flow:
 4. Warehouse receives returned goods.
 5. Quality inspection is performed.
 6. Goods are transferred to damaged stock.
-7. Finance processes credit note.
+7. Finance processes credit note or refund.
 8. Customer receivable is adjusted.
 
 **Expected outcome:** Return transactions remain traceable and financially accurate.
@@ -1577,7 +1905,7 @@ Business flow:
 7. Validate landed cost.
 8. Review updated inventory valuation.
 
-**Expected outcome:** Imported product costs accurately reflect eligible acquisition expenses.
+**Expected outcome:** Imported product costs reflect eligible acquisition expenses according to the approved allocation policy.
 
 ## 6.9 Scenario 09 – Inventory Adjustment and Cycle Counting
 
@@ -1610,33 +1938,136 @@ Business flow:
 6. Generate supplier performance report.
 7. Support future procurement decisions.
 
-**Expected outcome:** Supplier evaluation is based on operational evidence.
+**Expected outcome:** Supplier evaluation is based on operational evidence and defined KPI formulas.
 
 ---
 
-# 7. NON-FUNCTIONAL REQUIREMENTS
+# 7. DATA MIGRATION AND DUMMY DATA REQUIREMENTS
 
-## 7.1 Performance
+## 7.1 Business Objective
+
+Prepare structured and consistent dummy data to support initial ERP configuration, master data migration, opening balances, transaction testing, and portfolio demonstration.
+
+All records must be fictional and must not contain real personal or company confidential information.
+
+## 7.2 Target Data Volume
+
+| Data Category | Target Volume | Purpose |
+|---|---:|---|
+| Products | 500 | Product master |
+| Customers | 250 | Customer master |
+| Vendors | 40 | Supplier master |
+| Warehouses | 3 | Warehouse configuration |
+| Internal Locations | 30+ | Storage structure |
+| ERP Users | 20 | Role and access testing |
+| Historical Sales Orders | 1,000 | Sales history and reporting |
+| Historical Purchase Orders | 300 | Procurement history |
+| Opening Lots | 100 | Traceability testing |
+| Opening Stock Records | 500+ | Initial inventory |
+| Opening Customer Balances | 250 or fewer | Receivable opening data |
+| Opening Vendor Balances | 40 or fewer | Payable opening data |
+
+The target volume is a portfolio dataset specification, not an assertion that these records have already been created or migrated.
+
+## 7.3 Data Migration Scope
+
+| Data Set | Required Fields |
+|---|---|
+| Product Master | Internal reference, name, category, UoM, barcode, tracking, cost method category, sales price, purchase price |
+| Customer Master | Customer code, name, type, address, payment terms, credit limit, tax identification placeholder, salesperson |
+| Vendor Master | Vendor code, name, country, payment terms, lead time, product references |
+| Warehouse | Warehouse code, name, location |
+| Internal Locations | Location code, parent location, location type, warehouse |
+| Opening Inventory | Product, warehouse, location, quantity, UoM, lot/serial, expiration date, unit cost |
+| Customer Opening Balance | Customer, invoice reference, invoice date, due date, residual amount |
+| Vendor Opening Balance | Vendor, bill reference, bill date, due date, residual amount |
+| Historical Sales | Order reference, customer, product, quantity, price, date, status |
+| Historical Purchases | PO reference, vendor, product, quantity, unit price, order date, receipt date, status |
+
+## 7.4 Data Preparation Rules
+
+1. Each master record must have a unique identifier.
+2. Product references must be unique.
+3. Customer and vendor codes must be unique.
+4. UoM values must use standardized naming.
+5. Product categories must exist before product import.
+6. Warehouse and location structures must exist before opening stock import.
+7. Tracked products must have valid lot or serial information.
+8. Products with expiration tracking must have valid expiration dates.
+9. Opening stock quantities must be reconciled against the opening inventory file.
+10. Customer and vendor opening balances must be reconciled against the dummy opening trial balance.
+11. Historical transactions must not be imported as if they were current open transactions unless explicitly required.
+12. Imported records must preserve references between related business documents.
+
+## 7.5 Import Validation
+
+| Validation ID | Validation Rule | Acceptance Criteria |
+|---|---|---|
+| MIG-001 | Unique master references | No duplicate internal references |
+| MIG-002 | Product category mapping | 100% of products mapped to valid categories |
+| MIG-003 | UoM mapping | 100% of products mapped to valid UoMs |
+| MIG-004 | Customer and vendor references | No duplicate partner codes |
+| MIG-005 | Warehouse mapping | All stock records reference valid warehouses |
+| MIG-006 | Location mapping | All stock records reference valid internal locations |
+| MIG-007 | Lot and serial tracking | All tracked opening stock has valid identification |
+| MIG-008 | Expiration dates | All designated perishable lots have valid dates |
+| MIG-009 | Opening quantity | Imported quantity matches approved dummy opening file |
+| MIG-010 | Opening valuation | Imported inventory value reconciles to approved opening value |
+| MIG-011 | Opening receivables/payables | Balances reconcile to dummy opening accounting data |
+| MIG-012 | Import error handling | Rejected rows are logged and can be corrected |
+
+## 7.6 Data Migration Deliverables
+
+- Product master import template.
+- Customer master import template.
+- Vendor master import template.
+- Warehouse and location import template.
+- Opening stock import template.
+- Lot and serial import template.
+- Customer opening balance template.
+- Vendor opening balance template.
+- Historical transaction sample dataset.
+- Data cleansing and validation log.
+- Import execution evidence.
+- Reconciliation report.
+
+## 7.7 Data Ownership
+
+| Data Set | Data Owner | Reviewer |
+|---|---|---|
+| Product Master | Inventory Controller | Operations Manager |
+| Customer Master | Sales Administration | Sales Manager |
+| Vendor Master | Procurement Officer | Procurement Manager |
+| Warehouse and Locations | Warehouse Supervisor | Operations Manager |
+| Opening Stock | Inventory Controller | Finance Manager |
+| Opening Receivables | Accounts Receivable | Finance Manager |
+| Opening Payables | Accounts Payable | Finance Manager |
+| Accounting Opening Balances | Finance Department | Finance Manager |
+
+---
+
+# 8. NON-FUNCTIONAL REQUIREMENTS
+
+## 8.1 Performance
 
 - Normal business transactions should respond within an acceptable operational timeframe.
-- Standard form operations should target a response time of approximately 3 seconds under the agreed test environment.
+- Standard form operations should target approximately 3 seconds under the agreed test environment.
 - Management reports should execute within acceptable business reporting windows.
 - Database queries should be optimized for expected transaction volumes.
 - Batch operations must avoid unnecessary performance degradation.
+- Performance targets must be validated using realistic test data and documented test conditions.
 
-Performance targets must be validated through realistic testing rather than assumed from development environments.
+## 8.2 Security
 
-## 7.2 Security
-
-- User authentication must be required.
+- User authentication is mandatory.
 - Access must be role-based.
 - Sensitive financial information must be restricted.
-- Warehouse users must only access authorized operational areas.
+- Warehouse users must access only authorized operational areas.
 - Approval permissions must be separated from normal transaction permissions.
 - Unauthorized record modification must be prevented.
 - User activities must be traceable.
 
-## 7.3 Availability
+## 8.3 Availability
 
 - The system must support normal business operating hours.
 - Database backup procedures must be established.
@@ -1644,7 +2075,7 @@ Performance targets must be validated through realistic testing rather than assu
 - System failures must be logged.
 - Deployment must support service restart and recovery.
 
-## 7.4 Data Integrity
+## 8.4 Data Integrity
 
 - Master data must maintain unique references.
 - Transactions must maintain valid relationships.
@@ -1652,9 +2083,9 @@ Performance targets must be validated through realistic testing rather than assu
 - Financial transactions must preserve accounting integrity.
 - Deleted or cancelled business documents must not silently corrupt historical records.
 
-## 7.5 Scalability
+## 8.5 Scalability
 
-The system architecture must accommodate:
+The architecture must accommodate:
 
 - Additional warehouses.
 - More customers and suppliers.
@@ -1663,7 +2094,7 @@ The system architecture must accommodate:
 - Additional business users.
 - Future custom modules.
 
-## 7.6 Usability
+## 8.6 Usability
 
 - Interfaces must be understandable to operational users.
 - Standardized naming conventions must be applied.
@@ -1673,7 +2104,7 @@ The system architecture must accommodate:
 
 ---
 
-# 8. USER ROLES AND RESPONSIBILITIES
+# 9. USER ROLES AND RESPONSIBILITIES
 
 The ERP system must support role-based access control.
 
@@ -1682,11 +2113,14 @@ The ERP system must support role-based access control.
 | System Administrator | Technical system configuration |
 | ERP Manager | Functional administration |
 | Sales Representative | Customer quotations and sales |
-| Sales Manager | Sales supervision and approvals |
+| Sales Supervisor | Sales supervision |
+| Sales Manager | Sales approvals |
 | Procurement Officer | Supplier sourcing and purchasing |
+| Procurement Supervisor | Procurement review |
 | Procurement Manager | Procurement approval |
 | Warehouse Operator | Receiving, picking, packing |
 | Warehouse Supervisor | Warehouse supervision |
+| Warehouse Manager | Warehouse approval |
 | Inventory Controller | Stock reconciliation and reporting |
 | Quality Inspector | Product inspections |
 | Logistics Coordinator | Shipment coordination |
@@ -1694,197 +2128,90 @@ The ERP system must support role-based access control.
 | Accounts Receivable | Customer invoicing and collection |
 | Accounts Payable | Supplier invoices and payments |
 | Finance Manager | Financial control and approval |
+| Operations Manager | Operational oversight |
 | Managing Director | Executive oversight |
 
-Access permissions must be configured according to the principle of least privilege.
+Access permissions must follow the principle of least privilege.
 
 ---
 
-# 9. MASTER DATA AND PORTFOLIO DATASET
+# 10. PROJECT ASSUMPTIONS
 
-## 9.1 Initial Dummy Data Volume
+The project is based on the following assumptions:
 
-The following dataset will be used for portfolio implementation.
-
-| Data Entity | Target Records |
-|---|---:|
-| Products | 500 |
-| Product Categories | 5 |
-| Customers | 250 |
-| Vendors | 40 |
-| Warehouses | 3 |
-| Internal Locations | 30 |
-| Sales Users | 10 |
-| Procurement Users | 5 |
-| Warehouse Users | 12 |
-| Finance Users | 5 |
-| Historical Sales Orders | 1,000 |
-| Historical Purchase Orders | 300 |
-| Initial Inventory Lots | 100 |
-| Initial Stock Quantities | 500+ |
-
-These figures are implementation targets, not claims of actual company data.
-
-## 9.2 Sample Sales Transaction
-
-| Attribute | Value |
+| ID | Assumption |
 |---|---|
-| Sales Order | SO-2026-0001 |
-| Customer | PT Retail Makmur |
-| Warehouse | WH-JKT |
-| Order Date | 12-Nov-2026 |
-| Product | Arunika Mineral Water 600ml |
-| Quantity | 1,000 Units |
-| Unit Price | IDR 3,500 |
-| Subtotal | IDR 3,500,000 |
-| Tax | According to configured tax policy |
-| Payment Terms | Net 30 |
-
-## 9.3 Sample Purchase Transaction
-
-| Attribute | Value |
-|---|---|
-| Purchase Order | PO-2026-0001 |
-| Vendor | PT Nusantara Food Supply |
-| Warehouse | WH-JKT |
-| Order Date | 12-Nov-2026 |
-| Product | Arunika Mineral Water 600ml |
-| Quantity | 5,000 Units |
-| Unit Price | IDR 2,500 |
-| Subtotal | IDR 12,500,000 |
-| Expected Lead Time | 7 Days |
-
-## 9.4 Data Migration Requirements
-
-Although the portfolio uses dummy data, the implementation must demonstrate realistic migration practices.
-
-Requirements:
-
-- Data templates must be prepared.
-- Product references must be validated.
-- Customer and vendor records must be checked for duplicates.
-- Opening inventory must be reconciled.
-- Lot and expiration information must be validated.
-- Opening financial balances must be reconciled.
-- Data migration results must be documented.
+| ASM-001 | The company operates as a single legal entity |
+| ASM-002 | The company uses IDR as its primary currency |
+| ASM-003 | The company operates three distribution warehouses |
+| ASM-004 | The company follows a B2B distribution model |
+| ASM-005 | The initial product catalog contains 500 SKUs |
+| ASM-006 | The company has 250 active customers |
+| ASM-007 | The company has 40 active suppliers |
+| ASM-008 | Selected products require lot tracking |
+| ASM-009 | Selected products require serial tracking |
+| ASM-010 | Perishable products require expiration tracking |
+| ASM-011 | The company uses the dummy costing matrix defined in this BRD |
+| ASM-012 | The company uses the dummy approval policies defined in this BRD |
+| ASM-013 | The company uses the illustrative tax assumptions defined in this BRD |
+| ASM-014 | All sample records are fictional |
+| ASM-015 | Historical transactions are created for portfolio testing |
+| ASM-016 | Accounting opening balances are prepared and reconciled before migration |
+| ASM-017 | Users and roles are assigned according to the defined organizational structure |
+| ASM-018 | Odoo 19 Enterprise is the target ERP platform |
 
 ---
 
-# 10. BUSINESS KPI AND SUCCESS CRITERIA
+# 11. PROJECT DEPENDENCIES
 
-The project will use measurable KPIs to evaluate business improvements.
-
-The following targets are fictional portfolio acceptance targets and will require baseline measurement during implementation.
-
-| KPI ID | KPI | Target |
-|---|---|---:|
-| KPI-001 | Inventory Accuracy | ≥ 98% |
-| KPI-002 | On-Time Delivery Rate | ≥ 95% |
-| KPI-003 | Order Fulfillment Rate | ≥ 97% |
-| KPI-004 | Supplier On-Time Delivery | ≥ 95% |
-| KPI-005 | Purchase Order Processing Time | ≤ 1 business day after complete approval request |
-| KPI-006 | Sales Order Processing Time | ≤ 15 minutes for standard orders |
-| KPI-007 | Expired Product Sales | 0 |
-| KPI-008 | Stock Traceability | 100% for tracked products |
-| KPI-009 | Inventory Reconciliation Completion | 100% of scheduled counts |
-| KPI-010 | Financial Reconciliation Accuracy | 100% of validated test cases |
-
-## 10.1 KPI Measurement Method
-
-Inventory Accuracy:
-
-Physical inventory quantity compared against recorded system inventory.
-
-On-Time Delivery Rate:
-
-Orders delivered within the agreed delivery date divided by total eligible delivered orders.
-
-Order Fulfillment Rate:
-
-Quantity delivered divided by quantity ordered, measured for completed delivery commitments.
-
-Supplier On-Time Delivery:
-
-Purchase receipts received on or before the agreed delivery date divided by eligible purchase receipts.
-
-Expired Product Sales:
-
-Number of expired products included in validated outbound sales deliveries.
-
-Stock Traceability:
-
-Percentage of tracked inventory transactions with complete lot or serial identification.
-
----
-
-# 11. ASSUMPTIONS AND DEPENDENCIES
-
-## 11.1 Business Assumptions
-
-1. The company operates under a single legal entity for the initial implementation.
-2. All three warehouses belong to the same company.
-3. The business primarily operates using IDR.
-4. The company uses B2B sales processes.
-5. Product traceability is required for selected products.
-6. The company uses customer credit terms.
-7. Procurement includes domestic and international suppliers.
-8. Inventory valuation follows an approved accounting policy.
-9. Each department provides designated ERP users.
-10. All dummy transactions are created for portfolio demonstration.
-
-## 11.2 Technical Assumptions
-
-1. Odoo 19 Enterprise is installed and operational.
-2. PostgreSQL is available.
-3. Ubuntu Linux is used for deployment.
-4. Required Enterprise applications are licensed and accessible.
-5. Custom modules will follow Odoo development conventions.
-6. External integrations will use documented APIs.
-7. Database backup and recovery procedures will be established.
-8. Development and testing will use separate environments where practical.
-
-## 11.3 Dependencies
-
-- Business approval of requirements.
-- Availability of master data.
-- Approved accounting policies.
-- Approved warehouse procedures.
-- Defined user roles.
-- Odoo Enterprise application availability.
-- Tax configuration confirmation.
-- Valid dummy datasets.
-- Acceptance of test scenarios.
+| ID | Dependency | Responsible Party |
+|---|---|---|
+| DEP-001 | BRD review and baseline approval | Project Sponsor / Stakeholders |
+| DEP-002 | Approved business policies | Relevant Business Managers |
+| DEP-003 | Product, customer, and vendor master data | Business Departments |
+| DEP-004 | Opening inventory data | Inventory Controller |
+| DEP-005 | Accounting opening balances | Finance Manager |
+| DEP-006 | Indonesian tax configuration validation | Finance Manager / Tax Advisor |
+| DEP-007 | Odoo Enterprise environment | ERP Technical Team |
+| DEP-008 | User role and access definition | ERP Manager |
+| DEP-009 | Warehouse and inventory SOP | Operations Manager |
+| DEP-010 | Test scenarios and expected results | Business Owners |
+| DEP-011 | Dummy dataset preparation | ERP Implementation Team |
+| DEP-012 | Infrastructure and backup readiness | IT Department |
 
 ---
 
 # 12. PROJECT RISKS AND MITIGATION
 
-| Risk ID | Risk | Potential Impact | Mitigation |
+| Risk ID | Risk | Impact | Mitigation |
 |---|---|---|---|
 | RSK-001 | Inconsistent master data | Incorrect transactions | Data cleansing and validation |
-| RSK-002 | Incorrect inventory opening balances | Inventory discrepancies | Opening stock reconciliation |
-| RSK-003 | Incorrect accounting configuration | Financial reporting errors | Finance review and testing |
-| RSK-004 | Poor user adoption | Operational disruption | User training |
-| RSK-005 | Incorrect access permissions | Unauthorized activities | Security testing |
-| RSK-006 | Inadequate warehouse procedures | Fulfillment errors | Standardized SOP |
-| RSK-007 | Custom module defects | Business process failures | Automated and manual testing |
-| RSK-008 | Poor integration reliability | Inconsistent external data | Error handling and retry mechanisms |
-| RSK-009 | Performance degradation | Slow transactions | Load and performance testing |
-| RSK-010 | Insufficient backup procedures | Data loss | Backup and recovery testing |
-| RSK-011 | Incorrect lot/expiration data | Product traceability failure | Receiving validation |
-| RSK-012 | Inaccurate landed cost allocation | Incorrect inventory valuation | Financial reconciliation |
+| RSK-002 | Incorrect opening stock | Inventory discrepancies | Physical count simulation and reconciliation |
+| RSK-003 | Incorrect accounting configuration | Financial misstatement | Finance review and controlled testing |
+| RSK-004 | User resistance | Low adoption | Training and SOP documentation |
+| RSK-005 | Incorrect access permissions | Unauthorized transactions | Role-based access review |
+| RSK-006 | Unclear warehouse SOP | Operational inconsistency | Standardized process documentation |
+| RSK-007 | Custom module defects | Transaction errors | Automated and manual testing |
+| RSK-008 | Integration issues | Inconsistent data | Integration testing |
+| RSK-009 | Poor performance | Operational delays | Performance testing |
+| RSK-010 | Backup failure | Data loss | Backup and recovery testing |
+| RSK-011 | Incorrect lot and expiry data | Product traceability failure | Import validation |
+| RSK-012 | Incorrect landed cost allocation | Incorrect inventory valuation | Finance reconciliation |
+| RSK-013 | Incorrect credit exposure calculation | Excessive customer credit risk | Reconciliation against accounting balances and order commitments |
+| RSK-014 | Incorrect KPI source data | Misleading management reports | KPI reconciliation and data lineage review |
+| RSK-015 | Incorrect tax assumptions | Incorrect tax postings | Explicit portfolio labeling and Finance validation |
 
 ---
 
 # 13. IMPLEMENTATION SUCCESS AND ACCEPTANCE CRITERIA
 
-The implementation will be considered functionally successful when the following conditions are achieved:
+The project will be considered functionally successful when the defined business processes and system controls operate according to the approved requirements.
 
 ## 13.1 Functional Acceptance
 
 - Master data can be created and maintained.
 - Sales quotations can be converted into sales orders.
-- Customer credit controls operate according to approved policies.
+- Customer credit controls operate according to the approved dummy policy.
 - Purchase requisitions and purchase orders can be processed.
 - Purchase approvals follow the defined approval matrix.
 - Goods receipts support partial deliveries.
@@ -1896,7 +2223,11 @@ The implementation will be considered functionally successful when the following
 - Customer returns and supplier returns are supported.
 - Inventory valuation is integrated with accounting.
 - Vendor bills can be matched against purchasing and receiving records.
+- Quality inspection checklists enforce defined acceptance criteria.
+- Vendor performance calculations use documented formulas.
 - Management reports provide consistent transactional information.
+- Customer credit exposure is calculated without double-counting order and invoice obligations.
+- Data migration templates and validation procedures are available.
 
 ## 13.2 Technical Acceptance
 
@@ -1908,6 +2239,8 @@ The implementation will be considered functionally successful when the following
 - Automated tests pass.
 - Database backup and recovery are demonstrated.
 - Deployment documentation is available.
+- KPI calculations can be reconciled to their source data.
+- Import validation errors are logged and traceable.
 
 ## 13.3 Operational Acceptance
 
@@ -1917,6 +2250,25 @@ The implementation will be considered functionally successful when the following
 - Critical business scenarios are successfully tested.
 - No unresolved critical defects remain.
 - UAT approval is documented.
+- Business owners accept the implemented workflows.
+- Opening data reconciliation is documented.
+
+## 13.4 Portfolio KPI Targets
+
+These targets are fictional project success criteria. They are not actual achieved results.
+
+| KPI | Target | Measurement |
+|---|---:|---|
+| Inventory Accuracy | ≥98% | Correct counted quantity ÷ total counted quantity × 100 |
+| On-Time Delivery | ≥95% | On-time deliveries ÷ eligible deliveries × 100 |
+| Order Fulfillment | ≥97% | Delivered quantity ÷ ordered quantity × 100 |
+| Supplier On-Time Delivery | ≥95% | On-time receipts ÷ eligible receipts × 100 |
+| Quality Acceptance | ≥99% | Accepted inspected quantity ÷ total inspected quantity × 100 |
+| Product Traceability | 100% | Tracked movements with valid lot/serial references ÷ tracked movements × 100 |
+| Expired Product Sales | 0 | Number of validated sales deliveries containing expired products |
+| Data Migration Accuracy | ≥99.5% | Validated imported records ÷ total imported records × 100 |
+| Critical Defects at UAT Sign-Off | 0 | Open critical defects |
+| Credit Control Compliance | 100% | Credit-controlled transactions following approval policy ÷ applicable transactions × 100 |
 
 ---
 
@@ -1931,11 +2283,36 @@ Requirements will be prioritized using the MoSCoW method.
 | Could Have | Useful enhancement that can be deferred |
 | Won't Have | Explicitly excluded from current implementation |
 
-The requirements marked Must Have form the baseline for initial functional acceptance.
+Requirements marked Must Have form the baseline for initial functional acceptance.
+
+Any priority change after baseline approval must be recorded through change control.
 
 ---
 
-# 15. GLOSSARY
+# 15. OPEN POLICY AND DECISION REGISTER
+
+The following register distinguishes the policies defined by this revised BRD from items that still require detailed design or validation.
+
+| Decision ID | Area | Portfolio Decision in BRD | Remaining Validation |
+|---|---|---|---|
+| DEC-001 | Purchase Approval | Thresholds defined in Section 5.3.5 | Validate approval routing in Odoo |
+| DEC-002 | Sales Discounts | Discount tiers defined in Section 5.2.6 | Validate approval behavior |
+| DEC-003 | Inventory Adjustments | Value-based approval tiers defined in Section 5.4.5 | Validate valuation calculation and approval flow |
+| DEC-004 | Costing | FIFO/AVCO defined per product category | Validate accounting configuration and valuation behavior |
+| DEC-005 | Indonesian Tax | Illustrative 11% dummy tax assumptions | Must be validated before any real deployment |
+| DEC-006 | Credit Management | Exposure formula and hold rules defined | Validate data sources and avoid double-counting |
+| DEC-007 | Quality | Measurable inspection criteria defined | Confirm checklist implementation and disposition |
+| DEC-008 | Vendor Performance | KPI formulas and weights defined | Validate source fields and sample-size rules |
+| DEC-009 | Reporting | KPI formulas and sources defined | Validate dashboard reconciliation |
+| DEC-010 | Data Migration | Data volumes and templates defined | Generate, cleanse, and validate actual dummy datasets |
+| DEC-011 | Refund Approval | Value-based approval matrix defined | Validate workflow and segregation of duties |
+| DEC-012 | Landed Cost | Allocation method assigned by cost type | Validate accounting treatment and allocation behavior |
+
+A policy being defined in this BRD does not mean it has already been configured or tested in Odoo.
+
+---
+
+# 16. GLOSSARY
 
 | Term | Definition |
 |---|---|
@@ -1966,39 +2343,55 @@ The requirements marked Must Have form the baseline for initial functional accep
 | PPN | Pajak Pertambahan Nilai |
 | ACL | Access Control List |
 | ORM | Object Relational Mapping |
+| OTD | On-Time Delivery |
+| AR | Accounts Receivable |
+| AP | Accounts Payable |
+| DPP | Dasar Pengenaan Pajak |
 
 ---
 
-# 16. BRD CONCLUSION
+# 17. BRD CONCLUSION
 
 The Advanced Wholesale Distribution & Supply Chain ERP implementation aims to transform PT Arunika Distribusi Nusantara from fragmented operational management into an integrated, centralized, and controlled enterprise distribution environment.
 
-The implementation will establish standardized business processes across procurement, warehouse operations, inventory management, sales, logistics, accounting, and supplier management.
+The revised BRD defines the company's fictional business policies and requirements across procurement, warehouse operations, inventory management, sales, logistics, quality management, accounting, credit management, supplier management, and reporting.
 
-Odoo 19 Enterprise will serve as the central ERP platform, supported by appropriate configuration, automation, custom module development, and system integration.
+Version 1.1 provides more specific business rules for previously ambiguous areas, including:
 
-The project will demonstrate a realistic enterprise distribution environment and provide evidence of functional consulting, technical development, process integration, and ERP implementation capabilities.
+- Purchase and sales approval thresholds.
+- Inventory adjustment approval.
+- Product-category costing methods.
+- Illustrative Indonesian tax configuration.
+- Customer credit exposure and blocking rules.
+- Measurable quality inspection criteria.
+- Vendor performance formulas and source data.
+- Dashboard KPI formulas and data lineage.
+- Data migration scope, volume, and validation criteria.
 
-The approved BRD will serve as the baseline reference for subsequent project deliverables.
+Odoo 19 Enterprise will serve as the central ERP platform, supported by appropriate standard configuration, automation, custom module development, and integration where justified by fit-gap analysis.
+
+This document will serve as the business requirements reference for the subsequent SOW, process mapping, FSD, Fit-Gap Analysis, TDD, implementation, and testing deliverables.
+
+**The document remains a Revised Draft until the portfolio approval process is completed.**
 
 ---
 
-# 17. NEXT DOCUMENTS AND PROJECT DELIVERABLES
-
-The following documents will be developed using this BRD as the business requirements baseline.
+# 18. NEXT DOCUMENTS AND PROJECT DELIVERABLES
 
 | Sequence | Document | Purpose |
 |---|---|---|
 | 01 | Business Requirements Document (BRD) | Defines business needs and processes |
 | 02 | Scope of Work (SOW) | Defines implementation boundaries and deliverables |
-| 03 | Functional Specification Document (FSD) | Defines functional behavior and workflows |
-| 04 | Technical Design Document (TDD) | Defines architecture and technical implementation |
-| 05 | Configuration & Development Guide | Documents actual Odoo implementation |
-| 06 | Test Strategy & Test Cases | Defines testing coverage |
-| 07 | Test Execution Evidence | Documents test results |
-| 08 | Requirements Traceability Matrix | Connects requirements to implementation and tests |
-| 09 | UAT & Defect Summary | Records user acceptance and defects |
-| 10 | Deployment & Handover Guide | Documents production-like deployment |
+| 03 | Business Process Mapping | Defines AS-IS and TO-BE business processes |
+| 04 | Functional Specification Document (FSD) | Defines functional behavior and workflows |
+| 05 | Fit-Gap Analysis | Determines standard configuration, customization, integration, or exclusions |
+| 06 | Technical Design Document (TDD) | Defines architecture and technical implementation |
+| 07 | Configuration & Development Guide | Documents actual Odoo implementation |
+| 08 | Test Strategy & Test Cases | Defines testing coverage |
+| 09 | Test Execution Evidence | Documents test results |
+| 10 | Requirements Traceability Matrix | Connects requirements to implementation and tests |
+| 11 | UAT & Defect Summary | Records user acceptance and defects |
+| 12 | Deployment & Handover Guide | Documents production-like deployment |
 
 ## DOCUMENT END
 
@@ -2006,5 +2399,6 @@ The following documents will be developed using this BRD as the business require
 **Project:** Advanced Wholesale Distribution & Supply Chain ERP  
 **Organization:** PT Arunika Distribusi Nusantara  
 **ERP Platform:** Odoo 19 Enterprise  
-**Version:** 1.0  
-**Status:** Draft for Baseline
+**Version:** 1.1  
+**Status:** Revised Draft – Pending Portfolio Baseline Approval  
+**Classification:** Portfolio / Fictional Business Case
