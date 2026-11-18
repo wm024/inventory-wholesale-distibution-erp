@@ -10,8 +10,8 @@
 | Project ID | ADN-ERP-2026-001 |
 | Version | 1.0 |
 | Date | 16 November 2026 |
-| Status | Draft -- Pending Portfolio Baseline Approval |
-| BRD Reference | ADN-BRD-001, Version 1.1 -- Revised Draft, Pending Portfolio Baseline Approval |
+| Status | Approved |
+| BRD Reference | ADN-BRD-001, Version 1.1 -- Approved |
 | Classification | Portfolio / Fictional Business Case |
 | Deployment | On-Premise / Ubuntu Linux / PostgreSQL |
 
@@ -65,7 +65,7 @@
 | OS / Database | Ubuntu Linux / PostgreSQL |
 | Legal entity / currency | Single company / IDR |
 | Scale | 500 products; 250 customers; 40 vendors; 3 warehouses; 30+ internal locations; 20 ERP users |
-| BRD status | Revised Draft -- Pending Portfolio Baseline Approval |
+| BRD status | Approved |
 
 The BRD defines business outcomes and policies; this SOW defines the delivery scope. Detailed screen behavior, model design, exact import mappings, technical architecture, and custom implementation decisions will be specified in the FSD, Fit-Gap Analysis, and TDD.
 
@@ -110,7 +110,7 @@ The BRD defines business outcomes and policies; this SOW defines the delivery sc
 
 | Phase | Work Package | Activities | Key Outputs |
 | --- | --- | --- | --- |
-| P1 | Initiation & Business Analysis | Confirm BRD baseline status; stakeholder walkthrough; clarify open decisions DEC-001--DEC-012; process mapping; fit-gap; project plan. | Approved project plan; process maps; decision log; fit-gap register. |
+| P1 | Initiation & Business Analysis | Confirm BRD baseline status; stakeholder walkthrough; clarify open decisions DEC-001-DEC-012; process mapping; fit-gap; project plan. | Approved project plan; process maps; decision log; fit-gap register. |
 | P2 | Master Data Preparation | Generate/cleanse/validate 500 products, 250 customers, 40 vendors, 3 warehouses, 30+ locations, 20 users, UoM, categories, price lists, vendor prices. | Master data workbook; import templates; data validation log; data ownership sign-off simulation. |
 | P3 | Core ERP Configuration | Company, localization baseline, accounting structure, sales, purchase, inventory, warehouses, payment terms, pricelists, taxes as illustrative only, user groups. | Configured core Odoo database; configuration workbook; screenshots/evidence. \|
 | P4 | Advanced Warehouse & Supply Chain | Routes, putaway, replenishment, inter-warehouse flows, lot/serial, expiration, FEFO, barcode flows, quality checks, returns. | Warehouse/supply chain configuration; scenario evidence. |
@@ -319,13 +319,13 @@ The project work is considered complete for portfolio purposes when deliverables
 
 | Approver Role | Name (Fictional) | Decision | Date / Signature |
 | --- | --- | --- | --- |
-| Project Sponsor | Andika Pratama | Pending portfolio simulation | Not recorded \|
-| Managing Director | Budi Santoso | Pending portfolio simulation | Not recorded \|
-| Operations Manager | Rina Maharani | Pending portfolio simulation | Not recorded \|
-| Procurement Manager | Dimas Saputra | Pending portfolio simulation | Not recorded |
-| Sales Manager | Nadia Putri | Pending portfolio simulation | Not recorded |
-| Finance Manager | Hendra Wijaya | Pending portfolio simulation | Not recorded \|
-| ERP Project Manager | Fajar Nugraha | Pending portfolio simulation | Not recorded |
+| Project Sponsor | Andika Pratama | Approved | 18 November 2026 |
+| Managing Director | Budi Santoso | Approved | 18 November 2026 |
+| Operations Manager | Rina Maharani | Approved | 18 November 2026 |
+| Procurement Manager | Dimas Saputra | Approved | 18 November 2026 |
+| Sales Manager | Nadia Putri | Approved | 18 November 2026 |
+| Finance Manager | Hendra Wijaya | Approved | 18 November 2026 |
+| ERP Project Manager | Fajar Nugraha | Approved | 18 November 2026 |
 
 # 17. BRD Traceability Summary
 
@@ -344,6 +344,6 @@ The project work is considered complete for portfolio purposes when deliverables
 
 # 18. Document Status and Governance
 
-This SOW is Version 1.0 and remains a draft pending portfolio baseline approval. BRD ADN-BRD-001 Version 1.1 is also marked Revised Draft -- Pending Portfolio Baseline Approval. The SOW must be re-baselined if the BRD changes materially or if any open decision alters scope, cost, schedule, or acceptance.
+This SOW is Version 1.0 is accepted. BRD ADN-BRD-001 Version 1.1 is also marked as accepted. The SOW must be re-baselined if the BRD changes materially or if any open decision alters scope, cost, schedule, or acceptance.
 
 END OF DOCUMENT
