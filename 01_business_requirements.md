@@ -10,7 +10,7 @@
 **Document ID:** ADN-BRD-001  
 **Project ID:** ADN-ERP-2026-001  
 **Document Version:** 1.1  
-**Document Status:** Revised Draft – Pending Portfolio Baseline Approval  
+**Document Status:** Approved  
 **Prepared For:** ERP Implementation Case Study  
 **Prepared By:** ERP Implementation Consultant  
 **Document Date:** 16 November 2026  
@@ -33,7 +33,7 @@
 | ERP System | Odoo 19 Enterprise |
 | Document Owner | ERP Business Analyst |
 | Version | 1.1 |
-| Status | Revised Draft – Pending Portfolio Baseline Approval |
+| Status | Approved |
 | Classification | Portfolio / Fictional Business Case |
 | Currency | Indonesian Rupiah (IDR) |
 | Country | Indonesia |
@@ -2400,5 +2400,5 @@ This document will serve as the business requirements reference for the subseque
 **Organization:** PT Arunika Distribusi Nusantara  
 **ERP Platform:** Odoo 19 Enterprise  
 **Version:** 1.1  
-**Status:** Revised Draft – Pending Portfolio Baseline Approval  
+**Status:** Approved
 **Classification:** Portfolio / Fictional Business Case
