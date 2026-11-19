@@ -1,0 +1,90 @@
+<odoo>
+    <record id="sale_order_form_adn_discount_approval" model="ir.ui.view">
+        <field name="name">sale.order.form.adn.discount.approval</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_submit_discount_approval" type="object"
+                        string="Submit Discount Approval" class="btn-primary"
+                        groups="adn_sale_discount_approval.group_sales_discount_requester"
+                        invisible="state not in ['draft', 'sent'] or adn_discount_approval_state == 'pending'"/>
+                <button name="action_open_discount_approval" type="object"
+                        string="Open Discount Approval" class="btn-secondary"
+                        groups="adn_approval_core.group_approval_user"
+                        invisible="not adn_discount_approval_request_id"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='discount']" position="after">
+                <field name="adn_discount_percentage" optional="hide" readonly="1"/>
+                <field name="adn_discount_tier" optional="hide" readonly="1"/>
+                <field name="adn_discount_approval_state" optional="hide" readonly="1"/>
+                <field name="adn_discount_reason" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='price_unit']" position="after">
+                <field name="adn_discount_reference_price" readonly="1"/>
+                <field name="adn_discount_percentage" readonly="1"/>
+                <field name="adn_discount_tier" readonly="1"/>
+                <field name="adn_discount_approval_state" readonly="1"/>
+                <field name="adn_discount_reason"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="ADN Discount Approval" name="adn_discount_approval">
+                    <group>
+                        <group>
+                            <field name="adn_discount_approval_state"/>
+                            <field name="adn_discount_approval_request_id" options="{'no_create': True}"/>
+                            <field name="adn_discount_reference_date"/>
+                        </group>
+                        <group>
+                            <field name="adn_discount_approval_fingerprint" readonly="1"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        Discount is evaluated per order line against the configured reference price. Any controlled line keeps the quotation blocked until the approval request is complete. The reference basis and rounding must be configured under DEC-002.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_adn_discount_policy_form" model="ir.ui.view">
+        <field name="name">adn.approval.policy.form.sales.discount</field>
+        <field name="model">adn.approval.policy</field>
+        <field name="inherit_id" ref="adn_approval_core.view_adn_approval_policy_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Sales Discount Configuration" invisible="code != 'SO_DISCOUNT_APPROVAL'">
+                    <group>
+                        <group>
+                            <field name="adn_discount_reference_basis"/>
+                            <field name="adn_discount_cumulative_mode"/>
+                        </group>
+                        <group>
+                            <field name="adn_discount_rounding_digits"/>
+                            <field name="adn_discount_rounding_method"/>
+                        </group>
+                    </group>
+                    <field name="rule_ids">
+                        <list editable="bottom">
+                            <field name="sequence"/>
+                            <field name="tier_code"/>
+                            <field name="adn_has_min_discount"/>
+                            <field name="adn_min_discount_percentage"/>
+                            <field name="adn_min_discount_operator"/>
+                            <field name="adn_has_max_discount"/>
+                            <field name="adn_max_discount_percentage"/>
+                            <field name="adn_max_discount_operator"/>
+                            <field name="approver_group_ids" widget="many2many_tags"/>
+                            <field name="required_approvals"/>
+                            <field name="sequence_mode"/>
+                            <field name="active"/>
+                        </list>
+                    </field>
+                    <div class="text-warning">
+                        Do not activate this policy until Sales Manager has formally resolved DEC-002: reference price, rounding, cumulative discount treatment, and reapproval scope.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

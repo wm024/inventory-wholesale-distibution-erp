@@ -1,0 +1,54 @@
+<odoo noupdate="1">
+    <!-- Deliberately inactive: DEC-002 (reference price, rounding and cumulative discounts) must be resolved before activation. -->
+    <record id="policy_so_discount_approval" model="adn.approval.policy">
+        <field name="name">Sales Order Discount Approval</field>
+        <field name="code">SO_DISCOUNT_APPROVAL</field>
+        <field name="active" eval="False"/>
+        <field name="source_model_id" ref="sale.model_sale_order"/>
+        <field name="policy_version">1</field>
+        <field name="approval_mode">sequential</field>
+        <field name="notes">FSD discount bands: 0–5% Sales Representative authority; above 5–10% Sales Supervisor; above 10–15% Sales Manager; above 15% Sales Manager and Managing Director. Activate only after DEC-002 is formally resolved and the reference price basis and rounding are configured.</field>
+    </record>
+
+    <record id="rule_so_discount_supervisor" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_so_discount_approval"/>
+        <field name="sequence">10</field>
+        <field name="tier_code">SO_DISC_T1_SUPERVISOR</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_sales_supervisor_discount_approver'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="adn_has_min_discount" eval="True"/>
+        <field name="adn_min_discount_percentage">5.0</field>
+        <field name="adn_min_discount_operator">gt</field>
+        <field name="adn_has_max_discount" eval="True"/>
+        <field name="adn_max_discount_percentage">10.0</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="rule_so_discount_manager" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_so_discount_approval"/>
+        <field name="sequence">20</field>
+        <field name="tier_code">SO_DISC_T2_MANAGER</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_sales_manager_discount_approver'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="adn_has_min_discount" eval="True"/>
+        <field name="adn_min_discount_percentage">10.0</field>
+        <field name="adn_min_discount_operator">gt</field>
+        <field name="adn_has_max_discount" eval="True"/>
+        <field name="adn_max_discount_percentage">15.0</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="rule_so_discount_manager_md" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_so_discount_approval"/>
+        <field name="sequence">30</field>
+        <field name="tier_code">SO_DISC_T3_MANAGER_MD</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_sales_manager_discount_approver')), (4, ref('group_managing_director_discount_approver'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="adn_has_min_discount" eval="True"/>
+        <field name="adn_min_discount_percentage">15.0</field>
+        <field name="adn_min_discount_operator">gt</field>
+        <field name="adn_has_max_discount" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

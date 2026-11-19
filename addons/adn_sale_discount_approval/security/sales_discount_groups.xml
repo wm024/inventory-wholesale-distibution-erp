@@ -1,0 +1,26 @@
+<odoo>
+    <record id="module_category_adn_sales_discount" model="ir.module.category">
+        <field name="name">ADN Sales Discount Approval</field>
+        <field name="sequence">37</field>
+    </record>
+    <record id="group_sales_discount_requester" model="res.groups">
+        <field name="name">Sales Discount Approval Requester</field>
+        <field name="category_id" ref="module_category_adn_sales_discount"/>
+        <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_sales_supervisor_discount_approver" model="res.groups">
+        <field name="name">Sales Supervisor — Discount Approver</field>
+        <field name="category_id" ref="module_category_adn_sales_discount"/>
+        <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_sales_manager_discount_approver" model="res.groups">
+        <field name="name">Sales Manager — Discount Approver</field>
+        <field name="category_id" ref="module_category_adn_sales_discount"/>
+        <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_managing_director_discount_approver" model="res.groups">
+        <field name="name">Managing Director — Discount Approver</field>
+        <field name="category_id" ref="module_category_adn_sales_discount"/>
+        <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+</odoo>
