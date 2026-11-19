@@ -63,3 +63,10 @@ The adapter must also implement source fingerprint re-evaluation, source cancell
 ## Validation status
 
 This is an implementation package prepared from ADN-TDD-001. It has not been installed or executed against a real Odoo 19 database in this environment. Validate model fields, view syntax, method behavior, security, and test results against the exact target Odoo 19 build before promotion.
+
+
+## Security hardening — 19.0.1.0.1
+
+Protected approval request lifecycle fields and approval-step decision fields no longer accept a caller-supplied `approval_workflow` context flag as a bypass. Workflow methods validate the authenticated actor first, then perform the narrowly scoped protected write under elevated ORM privileges. Superseding a request also verifies write access to its source record and requires a changed source fingerprint. A regression test covers context-spoofing attempts.
+
+Approval request, step, item, and event record rules also limit Approval Users to their own requests or requests routed to one of their groups. Approval Managers retain company-scoped oversight access.

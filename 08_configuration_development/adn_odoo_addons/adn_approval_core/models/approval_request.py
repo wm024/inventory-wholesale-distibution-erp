@@ -40,6 +40,10 @@ class AdnApprovalRequest(models.Model):
     step_ids = fields.One2many("adn.approval.step", "request_id", copy=False)
     item_ids = fields.One2many("adn.approval.item", "request_id", copy=False)
     event_ids = fields.One2many("adn.approval.event", "request_id", copy=False)
+    approver_group_ids = fields.Many2many(
+        "res.groups", compute="_compute_approver_group_ids", store=True,
+        string="Routed Approver Groups",
+    )
     step_count = fields.Integer(compute="_compute_counts")
     pending_step_count = fields.Integer(compute="_compute_counts")
 
@@ -52,6 +56,11 @@ class AdnApprovalRequest(models.Model):
             if vals.get("name", "New") == "New":
                 vals["name"] = self.env["ir.sequence"].next_by_code("adn.approval.request") or "New"
         return super().create(vals_list)
+
+    @api.depends("step_ids.approver_group_id")
+    def _compute_approver_group_ids(self):
+        for rec in self:
+            rec.approver_group_ids = rec.step_ids.mapped("approver_group_id")
 
     @api.depends("step_ids", "step_ids.decision")
     def _compute_counts(self):
@@ -157,9 +166,9 @@ class AdnApprovalRequest(models.Model):
             complete = (approved_count >= request.required_approvals) if request.approval_mode == "any_required" else not request.step_ids.filtered(lambda s: s.decision == "pending")
             if complete:
                 for remaining in request.step_ids.filtered(lambda s: s.decision == "pending"):
-                    remaining.with_context(approval_workflow=True).write({"decision": "skipped"})
+                    remaining.sudo().write({"decision": "skipped"})
                 old = request.state
-                request.with_context(approval_workflow=True).write({"state": "approved", "completed_at": fields.Datetime.now()})
+                request.sudo().write({"state": "approved", "completed_at": fields.Datetime.now()})
                 request._append_event("approve", old, "approved", comment)
             else:
                 request._append_event("approve", "pending", "pending", comment, {"step_id": step.id})
@@ -175,7 +184,7 @@ class AdnApprovalRequest(models.Model):
             if not step:
                 raise UserError(_("There is no pending approval step."))
             step._record_decision("rejected", comment=reason)
-            request.with_context(approval_workflow=True).write({"state": "rejected", "completed_at": fields.Datetime.now()})
+            request.sudo().write({"state": "rejected", "completed_at": fields.Datetime.now()})
             request._append_event("reject", "pending", "rejected", reason, {"step_id": step.id})
         return True
 
@@ -186,7 +195,7 @@ class AdnApprovalRequest(models.Model):
             if request.state not in ("draft", "submitted", "pending"):
                 raise UserError(_("This request can no longer be cancelled."))
             old = request.state
-            request.with_context(approval_workflow=True).write({"state": "cancelled", "cancelled_at": fields.Datetime.now()})
+            request.sudo().write({"state": "cancelled", "cancelled_at": fields.Datetime.now()})
             request._append_event("cancel", old, "cancelled", reason)
         return True
 
@@ -194,8 +203,14 @@ class AdnApprovalRequest(models.Model):
         for request in self:
             if request.state not in ("pending", "approved"):
                 continue
+            source = self.env[request.source_model].browse(request.source_res_id).exists()
+            if not source:
+                raise ValidationError(_("The approval source record no longer exists."))
+            source.check_access("write")
+            if request._fingerprint(new_snapshot) == request.source_fingerprint:
+                raise ValidationError(_("The source fingerprint has not changed; this request cannot be superseded."))
             old = request.state
-            request.with_context(approval_workflow=True).write({"state": "superseded"})
+            request.sudo().write({"state": "superseded"})
             request._append_event("supersede", old, "superseded", reason, {
                 "old_fingerprint": request.source_fingerprint,
                 "new_fingerprint": self._fingerprint(new_snapshot),
@@ -216,7 +231,7 @@ class AdnApprovalRequest(models.Model):
 
     def write(self, vals):
         protected = {"policy_id", "policy_version", "company_id", "source_model", "source_res_id", "requester_id", "requested_at", "source_fingerprint", "source_snapshot", "state", "completed_at", "cancelled_at"}
-        if protected.intersection(vals) and not self.env.su and not self.env.context.get("approval_workflow") and not self.env.user.has_group("adn_approval_core.group_approval_manager"):
+        if protected.intersection(vals) and not self.env.su:
             raise AccessError(_("Approval lifecycle fields can only be changed through workflow actions."))
         return super().write(vals)
 

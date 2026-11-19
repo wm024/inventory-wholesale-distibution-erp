@@ -56,3 +56,23 @@ class TestAdnApprovalEngine(TransactionCase):
         request.with_user(self.approver).action_approve()
         with self.assertRaises(UserError):
             request.assert_released(self.source, "TEST_APPROVAL", {"amount": 3001})
+
+    def test_unassigned_approval_user_cannot_read_other_requests(self):
+        request = self.env["adn.approval.request"].with_user(self.requester).submit(
+            "TEST_APPROVAL", self.source.with_user(self.requester), 3000, {"amount": 3000}, "Test")
+        unrelated_user = self.env["res.users"].create({
+            "name": "Unassigned Approval User", "login": "adn_unassigned_approver_test",
+            "groups_id": [(6, 0, [self.env.ref("base.group_user").id, self.env.ref("adn_approval_core.group_approval_user").id])],
+        })
+        visible = self.env["adn.approval.request"].with_user(unrelated_user).search([("id", "=", request.id)])
+        self.assertFalse(visible)
+        self.assertTrue(request.with_user(self.approver).exists())
+
+    def test_client_context_cannot_bypass_lifecycle_protection(self):
+        request = self.env["adn.approval.request"].with_user(self.requester).submit(
+            "TEST_APPROVAL", self.source.with_user(self.requester), 3000, {"amount": 3000}, "Test")
+        with self.assertRaises(AccessError):
+            request.with_user(self.requester).with_context(approval_workflow=True).write({"state": "approved"})
+        step = request.step_ids[:1]
+        with self.assertRaises(AccessError):
+            step.with_user(self.requester).with_context(approval_workflow=True).write({"decision": "approved"})

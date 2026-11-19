@@ -34,12 +34,12 @@ class AdnApprovalStep(models.Model):
                 "decision": decision, "decided_by_id": self.env.user.id,
                 "decided_at": fields.Datetime.now(), "comment": comment or "",
             }
-            step.with_context(approval_workflow=True).write(vals)
+            step.sudo().write(vals)
         return True
 
     def write(self, vals):
         protected = {"decision", "decided_by_id", "decided_at", "comment", "delegated_from_id", "delegation_reference"}
-        if protected.intersection(vals) and not self.env.su and not self.env.context.get("approval_workflow"):
+        if protected.intersection(vals) and not self.env.su:
             raise AccessError(_("Approval decisions must be recorded through the approval workflow."))
         return super().write(vals)
 
