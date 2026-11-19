@@ -70,3 +70,7 @@ This is an implementation package prepared from ADN-TDD-001. It has not been ins
 Protected approval request lifecycle fields and approval-step decision fields no longer accept a caller-supplied `approval_workflow` context flag as a bypass. Workflow methods validate the authenticated actor first, then perform the narrowly scoped protected write under elevated ORM privileges. Superseding a request also verifies write access to its source record and requires a changed source fingerprint. A regression test covers context-spoofing attempts.
 
 Approval request, step, item, and event record rules also limit Approval Users to their own requests or requests routed to one of their groups. Approval Managers retain company-scoped oversight access.
+
+## Internal adapter routing API (v19.0.1.0.2)
+
+`adn.approval.request.submit(...)` remains the public amount-based submission API. Transaction adapters that must route on a non-monetary basis (for example, sales discount percentage) use the private server-side `_submit_with_rule(...)` method with a validated rule ID and explicit source currency. The leading underscore keeps this adapter method unavailable through normal external RPC method dispatch; callers must perform their own source-model authorization, snapshot calculation, and policy-specific validation before invoking it.

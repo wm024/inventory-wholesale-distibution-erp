@@ -75,7 +75,16 @@ class AdnApprovalRequest(models.Model):
 
     @api.model
     def submit(self, policy_code, source_record, amount, snapshot, reason=None, item_values=None):
-        """Create a request using server-side source values supplied by a trusted adapter."""
+        """Create an amount-routed request; public RPC callers cannot select a rule."""
+        return self._submit_with_rule(
+            policy_code, source_record, amount, snapshot, reason=reason,
+            item_values=item_values, rule_override_id=None, request_currency_id=None,
+        )
+
+    @api.model
+    def _submit_with_rule(self, policy_code, source_record, amount, snapshot, reason=None,
+                          item_values=None, rule_override_id=None, request_currency_id=None):
+        """Internal adapter API for non-monetary routing such as line discount percentage."""
         if not source_record or not source_record.exists():
             raise ValidationError(_("The approval source record no longer exists."))
         source_record.check_access("read")
@@ -83,13 +92,18 @@ class AdnApprovalRequest(models.Model):
         policy = self.env["adn.approval.policy"].get_active_policy(policy_code, company, source_record._name)
         policy.ensure_one()
         rules = policy.rule_ids.filtered("active").sorted(lambda r: (r.sequence, r.id))
-        matching = rules.filtered(lambda r: r.matches_amount(amount))
-        if not matching:
-            raise ValidationError(_("No approval rule matches amount %s for policy %s.") % (amount, policy.code))
-        # A single matching tier is expected; overlapping ranges are configuration errors.
-        if len(matching) > 1:
-            raise ValidationError(_("Approval policy '%s' has overlapping amount rules.") % policy.code)
-        rule = matching[0]
+        if rule_override_id:
+            rule = self.env["adn.approval.rule"].browse(rule_override_id).exists()
+            if not rule or rule.policy_id != policy or not rule.active:
+                raise ValidationError(_("The selected approval rule does not belong to the active policy."))
+        else:
+            matching = rules.filtered(lambda r: r.matches_amount(amount))
+            if not matching:
+                raise ValidationError(_("No approval rule matches amount %s for policy %s.") % (amount, policy.code))
+            # A single matching tier is expected; overlapping ranges are configuration errors.
+            if len(matching) > 1:
+                raise ValidationError(_("Approval policy '%s' has overlapping amount rules.") % policy.code)
+            rule = matching[0]
         if not rule.approver_group_ids:
             raise ValidationError(_("The selected approval rule has no approver groups."))
         user = self.env.user
@@ -112,7 +126,7 @@ class AdnApprovalRequest(models.Model):
             "policy_id": policy.id, "policy_version": policy.policy_version,
             "company_id": company.id, "source_model": source_record._name,
             "source_res_id": source_record.id, "source_display_name": source_record.display_name,
-            "requester_id": user.id, "reason": reason, "currency_id": policy.currency_id.id,
+            "requester_id": user.id, "reason": reason, "currency_id": request_currency_id or policy.currency_id.id,
             "amount_basis": amount, "tier_code": rule.tier_code,
             "approval_mode": policy.approval_mode, "sequence_mode": rule.sequence_mode,
             "required_approvals": rule.required_approvals,
