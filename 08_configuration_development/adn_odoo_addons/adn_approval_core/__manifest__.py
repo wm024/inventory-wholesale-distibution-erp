@@ -1,0 +1,22 @@
+{
+    "name": "ADN Approval Core",
+    "version": "19.0.1.0.0",
+    "category": "Administration",
+    "summary": "Reusable, auditable approval framework for ADN workflows",
+    "description": "Shared policy-driven approval engine for ADN transaction adapters.",
+    "author": "Muhammad Ridho Ramadhan",
+    "depends": ["base", "mail"],
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+        "data/approval_sequence.xml",
+        "views/approval_policy_views.xml",
+        "views/approval_reject_wizard_views.xml",
+        "views/approval_request_views.xml",
+        "views/approval_menus.xml",
+    ],
+    "demo": [],
+    "installable": True,
+    "application": False,
+    "license": "LGPL-3",
+}

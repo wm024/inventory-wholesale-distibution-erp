@@ -1,0 +1,35 @@
+<odoo>
+    <record id="view_adn_approval_policy_list" model="ir.ui.view">
+        <field name="name">adn.approval.policy.list</field>
+        <field name="model">adn.approval.policy</field>
+        <field name="arch" type="xml">
+            <list string="Approval Policies">
+                <field name="name"/><field name="code"/><field name="source_model"/>
+                <field name="policy_version"/><field name="company_id"/><field name="approval_mode"/><field name="active"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_adn_approval_policy_form" model="ir.ui.view">
+        <field name="name">adn.approval.policy.form</field>
+        <field name="model">adn.approval.policy</field>
+        <field name="arch" type="xml">
+            <form string="Approval Policy">
+                <header><button name="action_increment_version" type="object" string="Increment Version" groups="adn_approval_core.group_approval_policy_admin" class="btn-secondary"/></header>
+                <sheet>
+                    <div class="oe_title"><label for="name"/><h1><field name="name"/></h1></div>
+                    <group>
+                        <group><field name="code"/><field name="active"/><field name="source_model_id"/><field name="company_id"/></group>
+                        <group><field name="policy_version" readonly="1"/><field name="currency_id"/><field name="approval_mode"/><field name="effective_from"/><field name="effective_to"/></group>
+                    </group>
+                    <notebook>
+                        <page string="Approval Rules"><field name="rule_ids"><list editable="bottom"><field name="sequence"/><field name="tier_code"/><field name="has_min_amount"/><field name="min_amount"/><field name="min_operator"/><field name="has_max_amount"/><field name="max_amount"/><field name="max_operator"/><field name="approver_group_ids" widget="many2many_tags"/><field name="required_approvals"/><field name="sequence_mode"/><field name="active"/></list></field></page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_adn_approval_policy" model="ir.actions.act_window">
+        <field name="name">Approval Policies</field><field name="res_model">adn.approval.policy</field><field name="view_mode">list,form</field>
+    </record>
+</odoo>

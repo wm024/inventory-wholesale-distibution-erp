@@ -1,0 +1,34 @@
+<odoo>
+    <record id="view_adn_approval_request_list" model="ir.ui.view">
+        <field name="name">adn.approval.request.list</field><field name="model">adn.approval.request</field>
+        <field name="arch" type="xml"><list string="Approval Requests" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'" decoration-warning="state == 'pending'">
+            <field name="name"/><field name="requested_at"/><field name="source_display_name"/><field name="policy_id"/><field name="requester_id"/><field name="tier_code"/><field name="amount_basis"/><field name="currency_id"/><field name="state"/>
+        </list></field>
+    </record>
+    <record id="view_adn_approval_request_form" model="ir.ui.view">
+        <field name="name">adn.approval.request.form</field><field name="model">adn.approval.request</field>
+        <field name="arch" type="xml"><form string="Approval Request">
+            <header>
+                <button name="action_approve" type="object" string="Approve" class="btn-primary" invisible="state != 'pending'" groups="adn_approval_core.group_approval_user"/>
+                <button name="%(action_adn_approval_reject_wizard)d" type="action" string="Reject" class="btn-secondary" invisible="state != 'pending'" groups="adn_approval_core.group_approval_user"/>
+                <button name="action_cancel" type="object" string="Cancel" class="btn-secondary" invisible="state not in ('draft','submitted','pending')" groups="adn_approval_core.group_approval_manager"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved,rejected,cancelled,superseded"/>
+            </header>
+            <sheet>
+                <div class="oe_title"><h1><field name="name"/></h1></div>
+                <group><group><field name="policy_id"/><field name="policy_version"/><field name="tier_code"/><field name="company_id"/></group>
+                    <group><field name="requester_id"/><field name="submitted_by_id"/><field name="requested_at"/><field name="completed_at"/></group></group>
+                <group string="Source Transaction"><field name="source_model"/><field name="source_res_id"/><field name="source_display_name"/><field name="source_fingerprint"/></group>
+                <group><field name="amount_basis"/><field name="currency_id"/><field name="valid_until"/><field name="reason"/></group>
+                <notebook>
+                    <page string="Approval Steps"><field name="step_ids" readonly="1"><list><field name="sequence"/><field name="approver_group_id"/><field name="approver_id"/><field name="decision"/><field name="decided_by_id"/><field name="decided_at"/><field name="comment"/></list></field></page>
+                    <page string="Approval Items"><field name="item_ids" readonly="1"><list><field name="item_reference"/><field name="tier_code"/><field name="basis_value"/><field name="basis_percentage"/><field name="state"/></list></field></page>
+                    <page string="Source Snapshot"><field name="source_snapshot" widget="json" readonly="1"/></page>
+                    <page string="Audit Events"><field name="event_ids" readonly="1"><list><field name="event_at"/><field name="event_type"/><field name="actor_id"/><field name="previous_state"/><field name="new_state"/><field name="comment"/></list></field></page>
+                </notebook>
+            </sheet><chatter/>
+        </form></field>
+    </record>
+    <record id="action_adn_approval_request" model="ir.actions.act_window"><field name="name">Approval Requests</field><field name="res_model">adn.approval.request</field><field name="view_mode">list,form</field></record>
+    <record id="action_adn_my_pending_approvals" model="ir.actions.act_window"><field name="name">My Pending Approvals</field><field name="res_model">adn.approval.request</field><field name="view_mode">list,form</field><field name="domain">[('state','=','pending')]</field></record>
+</odoo>
