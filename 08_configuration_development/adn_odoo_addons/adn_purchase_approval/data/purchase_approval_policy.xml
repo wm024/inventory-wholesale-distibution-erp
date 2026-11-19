@@ -1,0 +1,75 @@
+<odoo noupdate="1">
+    <record id="policy_po_approval" model="adn.approval.policy">
+        <field name="name">Purchase Order Approval</field>
+        <field name="code">PO_APPROVAL</field>
+        <field name="active" eval="True"/>
+        <field name="source_model_id" ref="purchase.model_purchase_order"/>
+        <field name="policy_version">1</field>
+        <field name="currency_id" ref="base.IDR"/>
+        <field name="approval_mode">sequential</field>
+        <field name="notes">Approved FSD basis: untaxed purchase order total after line discounts, in IDR. Taxes and ancillary costs are excluded.</field>
+    </record>
+
+    <record id="rule_po_supervisor" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_po_approval"/>
+        <field name="sequence">10</field>
+        <field name="has_min_amount" eval="True"/>
+        <field name="min_amount">0</field>
+        <field name="has_max_amount" eval="True"/>
+        <field name="max_amount">10000000</field>
+        <field name="min_operator">gte</field>
+        <field name="max_operator">lte</field>
+        <field name="tier_code">PO_T1_SUPERVISOR</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_procurement_supervisor'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="rule_po_procurement_manager" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_po_approval"/>
+        <field name="sequence">20</field>
+        <field name="has_min_amount" eval="True"/>
+        <field name="min_amount">10000000</field>
+        <field name="has_max_amount" eval="True"/>
+        <field name="max_amount">50000000</field>
+        <field name="min_operator">gt</field>
+        <field name="max_operator">lte</field>
+        <field name="tier_code">PO_T2_PROCUREMENT_MANAGER</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_procurement_manager'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="rule_po_operations_manager" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_po_approval"/>
+        <field name="sequence">30</field>
+        <field name="has_min_amount" eval="True"/>
+        <field name="min_amount">50000000</field>
+        <field name="has_max_amount" eval="True"/>
+        <field name="max_amount">150000000</field>
+        <field name="min_operator">gt</field>
+        <field name="max_operator">lte</field>
+        <field name="tier_code">PO_T3_OPERATIONS_MANAGER</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_operations_manager'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="rule_po_managing_director" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_po_approval"/>
+        <field name="sequence">40</field>
+        <field name="has_min_amount" eval="True"/>
+        <field name="min_amount">150000000</field>
+        <field name="has_max_amount" eval="False"/>
+        <field name="min_operator">gt</field>
+        <field name="max_operator">lte</field>
+        <field name="tier_code">PO_T4_MANAGING_DIRECTOR</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_managing_director'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

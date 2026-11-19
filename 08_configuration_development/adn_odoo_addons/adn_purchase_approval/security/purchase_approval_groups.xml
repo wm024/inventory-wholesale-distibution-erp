@@ -1,0 +1,32 @@
+<odoo>
+    <record id="module_category_adn_purchase_approval" model="ir.module.category">
+        <field name="name">ADN Purchase Approval</field>
+        <field name="sequence">36</field>
+    </record>
+
+    <record id="group_purchase_approval_requester" model="res.groups">
+        <field name="name">Purchase Approval Requester</field>
+        <field name="category_id" ref="module_category_adn_purchase_approval"/>
+        <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_procurement_supervisor" model="res.groups">
+        <field name="name">Procurement Supervisor</field>
+        <field name="category_id" ref="module_category_adn_purchase_approval"/>
+        <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_procurement_manager" model="res.groups">
+        <field name="name">Procurement Manager</field>
+        <field name="category_id" ref="module_category_adn_purchase_approval"/>
+        <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_operations_manager" model="res.groups">
+        <field name="name">Operations Manager — Purchase Approval</field>
+        <field name="category_id" ref="module_category_adn_purchase_approval"/>
+        <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_managing_director" model="res.groups">
+        <field name="name">Managing Director — Purchase Approval</field>
+        <field name="category_id" ref="module_category_adn_purchase_approval"/>
+        <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+</odoo>

@@ -1,0 +1,36 @@
+<odoo>
+    <record id="purchase_order_form_adn_approval" model="ir.ui.view">
+        <field name="name">purchase.order.form.adn.approval</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_submit_approval" type="object"
+                        string="Submit for Approval" class="btn-primary"
+                        groups="adn_purchase_approval.group_purchase_approval_requester"
+                        invisible="state not in ['draft', 'sent'] or adn_approval_state == 'pending'"/>
+                <button name="action_open_adn_approval_request" type="object"
+                        string="Open Approval Request" class="btn-secondary"
+                        groups="adn_approval_core.group_approval_user"
+                        invisible="not adn_approval_request_id"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="ADN Approval" name="adn_approval">
+                    <group>
+                        <group>
+                            <field name="adn_approval_state"/>
+                            <field name="adn_approval_tier"/>
+                            <field name="adn_approval_amount"/>
+                        </group>
+                        <group>
+                            <field name="adn_approval_request_id" options="{'no_create': True}"/>
+                            <field name="adn_submitted_at"/>
+                            <field name="adn_last_approval_at"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">Approval is based on the untaxed purchase order total after line discounts, converted to IDR where required. Taxes and ancillary costs are excluded.</div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
