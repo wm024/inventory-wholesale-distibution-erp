@@ -1,0 +1,127 @@
+[options]
+
+; ============================================================
+; ADN ERP - PT Arunika Distribusi Nusantara
+; Odoo 19 Enterprise
+; Environment: Production
+; ============================================================
+
+
+; ------------------------------------------------------------
+; 1. SECURITY
+; ------------------------------------------------------------
+
+; Replace with a long, randomly generated secret.
+admin_passwd = CHANGE_ME_USE_A_LONG_RANDOM_SECRET
+
+; Disable database listing from the web interface.
+list_db = False
+
+; Restrict this Odoo instance to the production database.
+dbfilter = ^adn_erp_prod$
+
+
+; ------------------------------------------------------------
+; 2. DATABASE - PostgreSQL
+; ------------------------------------------------------------
+
+db_host = 127.0.0.1
+db_port = 5432
+db_user = odoo
+db_password = CHANGE_ME_POSTGRES_PASSWORD
+
+; PostgreSQL connection settings.
+db_sslmode = prefer
+db_maxconn = 64
+
+
+; ------------------------------------------------------------
+; 3. ADDONS
+; ------------------------------------------------------------
+
+; Adjust paths according to the actual Odoo installation.
+; Keep Enterprise and custom addons in separate directories.
+
+addons_path = /opt/odoo/odoo/addons,/opt/odoo/enterprise,/opt/odoo/adn-odoo-addons
+
+
+; ------------------------------------------------------------
+; 4. DATA DIRECTORY
+; ------------------------------------------------------------
+
+data_dir = /var/lib/odoo
+
+
+; ------------------------------------------------------------
+; 5. SERVER-WIDE MODULES
+; ------------------------------------------------------------
+
+server_wide_modules = base,web
+
+
+; ------------------------------------------------------------
+; 6. HTTP / NETWORK
+; ------------------------------------------------------------
+
+; Bind Odoo to localhost when using an HTTPS reverse proxy.
+http_interface = 127.0.0.1
+http_port = 8069
+
+; WebSocket / gevent service.
+gevent_port = 8072
+
+; Enable only when Odoo is behind a trusted reverse proxy.
+proxy_mode = True
+
+
+; ------------------------------------------------------------
+; 7. PERFORMANCE / WORKERS
+; ------------------------------------------------------------
+
+; Initial example values. Tune based on CPU and RAM capacity.
+workers = 4
+max_cron_threads = 2
+
+; Memory limits per worker (bytes).
+limit_memory_soft = 2147483648
+limit_memory_hard = 2684354560
+
+; Request execution limits (seconds).
+limit_time_cpu = 600
+limit_time_real = 1200
+
+; Maximum number of requests handled by a worker.
+limit_request = 8192
+
+
+; ------------------------------------------------------------
+; 8. LOGGING
+; ------------------------------------------------------------
+
+logfile = /var/log/odoo/odoo-server.log
+log_level = info
+
+log_handler = :INFO,werkzeug:WARNING,odoo.sql_db:WARNING
+
+
+; ------------------------------------------------------------
+; 9. EMAIL / SMTP (OPTIONAL)
+; ------------------------------------------------------------
+
+; Configure outgoing email through Odoo Settings or
+; enable the following parameters if required.
+
+; smtp_server = smtp.example.com
+; smtp_port = 587
+; smtp_user = odoo@example.com
+; smtp_password = CHANGE_ME_SMTP_PASSWORD
+; smtp_ssl = False
+
+
+; ------------------------------------------------------------
+; 10. PRODUCTION SAFETY
+; ------------------------------------------------------------
+
+; Do not enable development features in production.
+; Do not store real passwords in source control.
+; Keep database and filestore backups coordinated.
