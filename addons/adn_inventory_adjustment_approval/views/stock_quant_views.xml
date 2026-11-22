@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_stock_quant_tree_inventory_editable_adn" model="ir.ui.view">
+        <field name="name">stock.quant.inventory.list.editable.adn</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='inventory_diff_quantity']" position="after">
+                <field name="adn_adjustment_reason" optional="show"/>
+                <field name="adn_adjustment_evidence_ids" widget="many2many_binary" optional="show"/>
+                <field name="adn_inventory_adjustment_state" string="ADN Request" optional="hide" readonly="1" groups="adn_inventory_adjustment_approval.group_inventory_adjustment_requester,adn_inventory_adjustment_approval.group_inventory_adjustment_executor,adn_inventory_adjustment_approval.group_warehouse_supervisor,adn_inventory_adjustment_approval.group_warehouse_manager,adn_inventory_adjustment_approval.group_operations_manager,adn_inventory_adjustment_approval.group_finance_manager,adn_inventory_adjustment_approval.group_managing_director"/>
+                <field name="adn_inventory_approval_state" string="Approval" optional="hide" readonly="1" groups="adn_inventory_adjustment_approval.group_inventory_adjustment_requester,adn_inventory_adjustment_approval.group_inventory_adjustment_executor,adn_inventory_adjustment_approval.group_warehouse_supervisor,adn_inventory_adjustment_approval.group_warehouse_manager,adn_inventory_adjustment_approval.group_operations_manager,adn_inventory_adjustment_approval.group_finance_manager,adn_inventory_adjustment_approval.group_managing_director"/>
+                <field name="adn_inventory_adjustment_request_id" string="Approval Request" optional="hide" readonly="1" groups="adn_inventory_adjustment_approval.group_inventory_adjustment_requester,adn_inventory_adjustment_approval.group_inventory_adjustment_executor,adn_inventory_adjustment_approval.group_warehouse_supervisor,adn_inventory_adjustment_approval.group_warehouse_manager,adn_inventory_adjustment_approval.group_operations_manager,adn_inventory_adjustment_approval.group_finance_manager,adn_inventory_adjustment_approval.group_managing_director"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

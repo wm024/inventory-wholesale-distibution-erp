@@ -1,0 +1,21 @@
+<odoo>
+    <record id="view_company_form_inventory_adjustment_approval" model="ir.ui.view">
+        <field name="name">res.company.form.inventory.adjustment.approval</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="ADN Inventory Adjustment Approval" groups="base.group_system">
+                    <group>
+                    <field name="adn_inventory_adjustment_approval_enabled"/>
+                    <field name="adn_inventory_adjustment_aggregation" required="adn_inventory_adjustment_approval_enabled"/>
+                    <field name="adn_inventory_adjustment_grouping" required="adn_inventory_adjustment_approval_enabled"/>
+                    <field name="adn_inventory_adjustment_rounding" required="adn_inventory_adjustment_approval_enabled"/>
+                    <field name="adn_inventory_adjustment_valuation_timing" required="adn_inventory_adjustment_approval_enabled"/>
+                    <div class="text-muted" colspan="2">Keep approval disabled until DEC-003 is confirmed by Operations and Finance and the approval policy is activated.</div>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,125 @@
+<odoo>
+    <record id="view_adn_inventory_adjustment_request_list" model="ir.ui.view">
+        <field name="name">adn.inventory.adjustment.request.list</field>
+        <field name="model">adn.inventory.adjustment.request</field>
+        <field name="arch" type="xml">
+            <list string="Inventory Adjustment Approval Requests">
+                <field name="name"/>
+                <field name="requested_at"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="warehouse_id" optional="show"/>
+                <field name="requester_id"/>
+                <field name="line_count"/>
+                <field name="amount_basis" sum="Total Adjustment Value"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="approval_state"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_adn_inventory_adjustment_request_form" model="ir.ui.view">
+        <field name="name">adn.inventory.adjustment.request.form</field>
+        <field name="model">adn.inventory.adjustment.request</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Adjustment Approval Request" create="false" delete="false">
+                <header>
+                    <button name="action_open_approval_request" type="object" string="Open Approval" class="btn-secondary" invisible="not approval_request_id"/>
+                    <button name="action_release" type="object" string="Apply Approved Adjustment" class="btn-primary" groups="adn_inventory_adjustment_approval.group_inventory_adjustment_executor" invisible="state != 'submitted' or approval_state != 'approved'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="submitted,released,superseded"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="warehouse_id"/>
+                            <field name="requester_id"/>
+                            <field name="requested_at"/>
+                        </group>
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount_basis"/>
+                            <field name="signed_net_amount"/>
+                            <field name="aggregation_mode"/>
+                            <field name="grouping_mode"/>
+                            <field name="category_id"/>
+                            <field name="accounting_date"/>
+                            <field name="inventory_move_date"/>
+                            <field name="rounding_mode"/>
+                            <field name="valuation_timing"/>
+                            <field name="approval_state"/>
+                        </group>
+                    </group>
+                    <group string="Adjustment Reason">
+                        <field name="reason" nolabel="1"/>
+                    </group>
+                    <group string="Count Evidence">
+                        <field name="evidence_attachment_ids" widget="many2many_binary" nolabel="1" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Count Snapshot">
+                            <field name="line_ids" readonly="1">
+                                <list create="false" edit="false" delete="false">
+                                    <field name="quant_reference"/>
+                                    <field name="product_id"/>
+                                    <field name="location_id"/>
+                                    <field name="lot_id" optional="show"/>
+                                    <field name="package_id" optional="hide"/>
+                                    <field name="owner_id" optional="hide"/>
+                                    <field name="counted_by_id" optional="hide"/>
+                                    <field name="accounting_date" optional="hide"/>
+                                    <field name="adjustment_reason" optional="hide"/>
+                                    <field name="quantity" string="On Hand"/>
+                                    <field name="counted_quantity" string="Counted"/>
+                                    <field name="difference_quantity" string="Difference"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                    <field name="cost_method"/>
+                                    <field name="tracking" optional="hide"/>
+                                    <field name="lot_valuated" optional="hide"/>
+                                    <field name="unit_cost"/>
+                                    <field name="signed_value"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Execution">
+                            <group>
+                                <field name="approval_request_id"/>
+                                <field name="source_fingerprint"/>
+                                <field name="actual_valuation_amount"/>
+                                <field name="released_at"/>
+                                <field name="released_by_id"/>
+                            </group>
+                            <field name="stock_move_ids" readonly="1">
+                                <list create="false" edit="false" delete="false">
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                    <field name="product_uom_qty"/>
+                                    <field name="company_currency_id" column_invisible="True"/>
+                                    <field name="state"/>
+                                    <field name="value" groups="adn_inventory_adjustment_approval.group_inventory_adjustment_executor"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_adn_inventory_adjustment_requests" model="ir.actions.act_window">
+        <field name="name">Inventory Adjustment Approvals</field>
+        <field name="res_model">adn.inventory.adjustment.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_state_submitted': 1}</field>
+    </record>
+    <menuitem id="menu_adn_inventory_adjustment_requests"
+              name="ADN Adjustment Approvals"
+              parent="stock.menu_stock_adjustments"
+              action="action_adn_inventory_adjustment_requests"
+              sequence="25"
+              groups="adn_inventory_adjustment_approval.group_inventory_adjustment_requester,adn_inventory_adjustment_approval.group_warehouse_supervisor,adn_inventory_adjustment_approval.group_warehouse_manager,adn_inventory_adjustment_approval.group_operations_manager,adn_inventory_adjustment_approval.group_finance_manager,adn_inventory_adjustment_approval.group_managing_director"/>
+</odoo>

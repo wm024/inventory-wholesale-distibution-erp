@@ -1,0 +1,75 @@
+<odoo noupdate="1">
+    <!-- DEC-003 is still open in the approved source documents. Keep the policy
+         inactive until Operations and Finance confirm aggregation, grouping,
+         valuation timing, rounding and approval mode. -->
+    <record id="policy_inventory_adjustment_approval" model="adn.approval.policy">
+        <field name="name">Inventory Adjustment Approval</field>
+        <field name="code">INVENTORY_ADJUSTMENT_APPROVAL</field>
+        <field name="active" eval="False"/>
+        <field name="source_model_id" ref="model_adn_inventory_adjustment_request"/>
+        <field name="policy_version">1</field>
+        <field name="currency_id" ref="base.IDR"/>
+        <field name="approval_mode">all_required</field>
+        <field name="notes">DEC-003 gate: confirm aggregation, grouping, valuation snapshot, rounding and sequential/parallel approval mode before activation. IDR tiers are seeded from FSD §6.7.7.</field>
+    </record>
+
+    <record id="rule_inventory_adjustment_supervisor" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_inventory_adjustment_approval"/>
+        <field name="sequence">10</field>
+        <field name="has_min_amount" eval="True"/>
+        <field name="min_amount">0</field>
+        <field name="has_max_amount" eval="True"/>
+        <field name="max_amount">1000000</field>
+        <field name="min_operator">gte</field>
+        <field name="max_operator">lte</field>
+        <field name="tier_code">INV_T1_WAREHOUSE_SUPERVISOR</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_warehouse_supervisor'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">parallel</field>
+        <field name="active" eval="False"/>
+    </record>
+    <record id="rule_inventory_adjustment_warehouse_manager" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_inventory_adjustment_approval"/>
+        <field name="sequence">20</field>
+        <field name="has_min_amount" eval="True"/>
+        <field name="min_amount">1000000</field>
+        <field name="has_max_amount" eval="True"/>
+        <field name="max_amount">10000000</field>
+        <field name="min_operator">gt</field>
+        <field name="max_operator">lte</field>
+        <field name="tier_code">INV_T2_WAREHOUSE_MANAGER</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_warehouse_manager'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">parallel</field>
+        <field name="active" eval="False"/>
+    </record>
+    <record id="rule_inventory_adjustment_operations_finance" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_inventory_adjustment_approval"/>
+        <field name="sequence">30</field>
+        <field name="has_min_amount" eval="True"/>
+        <field name="min_amount">10000000</field>
+        <field name="has_max_amount" eval="True"/>
+        <field name="max_amount">50000000</field>
+        <field name="min_operator">gt</field>
+        <field name="max_operator">lte</field>
+        <field name="tier_code">INV_T3_OPERATIONS_FINANCE</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_operations_manager')), (4, ref('group_finance_manager'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">parallel</field>
+        <field name="active" eval="False"/>
+    </record>
+    <record id="rule_inventory_adjustment_md_finance" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_inventory_adjustment_approval"/>
+        <field name="sequence">40</field>
+        <field name="has_min_amount" eval="True"/>
+        <field name="min_amount">50000000</field>
+        <field name="has_max_amount" eval="False"/>
+        <field name="min_operator">gt</field>
+        <field name="max_operator">lte</field>
+        <field name="tier_code">INV_T4_MD_FINANCE</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_managing_director')), (4, ref('group_finance_manager'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">parallel</field>
+        <field name="active" eval="False"/>
+    </record>
+</odoo>

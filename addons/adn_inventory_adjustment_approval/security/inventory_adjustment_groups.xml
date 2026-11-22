@@ -1,0 +1,72 @@
+<odoo>
+    <record id="module_category_adn_inventory_adjustment_approval" model="ir.module.category">
+        <field name="name">ADN Inventory Adjustment Approval</field>
+        <field name="sequence">38</field>
+    </record>
+    <record id="privilege_adn_inventory_adjustment_approval" model="res.groups.privilege">
+        <field name="name">Inventory Adjustment Approval</field>
+        <field name="category_id" ref="module_category_adn_inventory_adjustment_approval"/>
+        <field name="sequence">38</field>
+    </record>
+
+    <record id="group_inventory_adjustment_requester" model="res.groups">
+        <field name="name">Inventory Adjustment Requester</field>
+        <field name="privilege_id" ref="privilege_adn_inventory_adjustment_approval"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_warehouse_supervisor" model="res.groups">
+        <field name="name">Warehouse Supervisor — Inventory Approval</field>
+        <field name="privilege_id" ref="privilege_adn_inventory_adjustment_approval"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_warehouse_manager" model="res.groups">
+        <field name="name">Warehouse Manager — Inventory Approval</field>
+        <field name="privilege_id" ref="privilege_adn_inventory_adjustment_approval"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_operations_manager" model="res.groups">
+        <field name="name">Operations Manager — Inventory Approval</field>
+        <field name="privilege_id" ref="privilege_adn_inventory_adjustment_approval"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_finance_manager" model="res.groups">
+        <field name="name">Finance Manager — Inventory Approval</field>
+        <field name="privilege_id" ref="privilege_adn_inventory_adjustment_approval"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_managing_director" model="res.groups">
+        <field name="name">Managing Director — Inventory Approval</field>
+        <field name="privilege_id" ref="privilege_adn_inventory_adjustment_approval"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user')), (4, ref('adn_approval_core.group_approval_user'))]"/>
+    </record>
+    <record id="group_inventory_adjustment_executor" model="res.groups">
+        <field name="name">Inventory Adjustment Executor</field>
+        <field name="privilege_id" ref="privilege_adn_inventory_adjustment_approval"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_manager')), (4, ref('group_inventory_adjustment_requester'))]"/>
+    </record>
+
+    <record id="rule_inventory_adjustment_request_own" model="ir.rule">
+        <field name="name">Inventory Adjustment Requests: requester own records</field>
+        <field name="model_id" ref="model_adn_inventory_adjustment_request"/>
+        <field name="domain_force">[('requester_id', '=', user.id), ('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_inventory_adjustment_requester'))]"/>
+    </record>
+    <record id="rule_inventory_adjustment_request_approvers" model="ir.rule">
+        <field name="name">Inventory Adjustment Requests: approver companies</field>
+        <field name="model_id" ref="model_adn_inventory_adjustment_request"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_warehouse_supervisor')), (4, ref('group_warehouse_manager')), (4, ref('group_operations_manager')), (4, ref('group_finance_manager')), (4, ref('group_managing_director')), (4, ref('group_inventory_adjustment_executor'))]"/>
+    </record>
+    <record id="rule_inventory_adjustment_line_own" model="ir.rule">
+        <field name="name">Inventory Adjustment Snapshot Lines: requester own records</field>
+        <field name="model_id" ref="model_adn_inventory_adjustment_line"/>
+        <field name="domain_force">[('request_id.requester_id', '=', user.id), ('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_inventory_adjustment_requester'))]"/>
+    </record>
+    <record id="rule_inventory_adjustment_line_approvers" model="ir.rule">
+        <field name="name">Inventory Adjustment Snapshot Lines: approver companies</field>
+        <field name="model_id" ref="model_adn_inventory_adjustment_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_warehouse_supervisor')), (4, ref('group_warehouse_manager')), (4, ref('group_operations_manager')), (4, ref('group_finance_manager')), (4, ref('group_managing_director')), (4, ref('group_inventory_adjustment_executor'))]"/>
+    </record>
+</odoo>
