@@ -552,7 +552,7 @@ Approval is based on absolute valuation difference, not sales price:
 | Above IDR 10,000,000–50,000,000 | Operations Manager and Finance Manager |
 | Above IDR 50,000,000 | Managing Director and Finance Manager |
 
-A standard stock count does not by itself establish this value-tier approval and validation lock. Custom approval is a candidate.
+A standard stock count does not by itself establish this value-tier approval and validation lock. Custom approval is required for the value-tier gate. DEC-003 was confirmed on 2026-11-22: calculate each changed adjustment line using inventory valuation cost, round each line using company currency precision, sum absolute line values without offsetting gains and losses, group by company + warehouse and accounting date, snapshot at submission and revalidate before release, and require parallel approval from every listed role. The existing value tiers remain unchanged.
 
 ### Costing policy
 - CAT-001 Food & Beverage: FIFO, automated valuation.
@@ -1117,7 +1117,7 @@ These decisions must be closed before the related feature is approved for build.
 |---|---|---|---|---|
 | DEC-001 | Purchase Approval | Confirm approver routing, delegation, substitution, amendment behavior, and split-order monitoring | Procurement Manager | PO approval design and tests |
 | DEC-002 | Sales Discount | Confirm discount reference price, rounding, cumulative discounts, line/order scope, reapproval | Sales Manager | Discount approval logic |
-| DEC-003 | Inventory Adjustment | Confirm valuation basis, rounding, aggregation across products, approval routing | Operations + Finance | Adjustment approval logic |
+| DEC-003 | Inventory Adjustment | CLOSED (2026-11-22): valuation cost; per-line currency rounding; sum of absolute line values; company + warehouse + accounting-date grouping; submission snapshot/release revalidation; parallel all-required approval | Operations + Finance | Adjustment approval logic |
 | DEC-004 | Costing | Validate FIFO/AVCO by category, automated valuation, accounts, and change restrictions | Finance Manager | Inventory valuation and migration |
 | DEC-005 | Indonesian Tax | Confirm localization, tax mapping, rates, reporting, and professional review | Finance Manager | Accounting configuration |
 | DEC-006 | Credit Management | Confirm exposure sources, order/invoice overlap, trigger, exception expiry, concurrent orders | Finance Manager | Credit calculation and hold |
