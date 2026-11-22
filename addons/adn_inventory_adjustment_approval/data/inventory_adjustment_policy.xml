@@ -1,16 +1,15 @@
 <odoo noupdate="1">
-    <!-- DEC-003 is still open in the approved source documents. Keep the policy
-         inactive until Operations and Finance confirm aggregation, grouping,
-         valuation timing, rounding and approval mode. -->
+    <!-- DEC-003 approved 2026-11-22. The policy is active, but the company-level
+         enforcement switch remains OFF by default until target-environment UAT. -->
     <record id="policy_inventory_adjustment_approval" model="adn.approval.policy">
         <field name="name">Inventory Adjustment Approval</field>
         <field name="code">INVENTORY_ADJUSTMENT_APPROVAL</field>
-        <field name="active" eval="False"/>
+        <field name="active" eval="True"/>
         <field name="source_model_id" ref="model_adn_inventory_adjustment_request"/>
-        <field name="policy_version">1</field>
+        <field name="policy_version">2</field>
         <field name="currency_id" ref="base.IDR"/>
         <field name="approval_mode">all_required</field>
-        <field name="notes">DEC-003 gate: confirm aggregation, grouping, valuation snapshot, rounding and sequential/parallel approval mode before activation. IDR tiers are seeded from FSD §6.7.7.</field>
+        <field name="notes">DEC-003 approved 2026-11-22: sum absolute per-line valuation values after company-currency rounding; group by company, warehouse and accounting date; snapshot at submission and revalidate before release; all listed roles approve in parallel. Company enforcement remains disabled until UAT sign-off. IDR tiers follow FSD §6.7.7.</field>
     </record>
 
     <record id="rule_inventory_adjustment_supervisor" model="adn.approval.rule">
@@ -26,7 +25,7 @@
         <field name="approver_group_ids" eval="[(4, ref('group_warehouse_supervisor'))]"/>
         <field name="required_approvals">1</field>
         <field name="sequence_mode">parallel</field>
-        <field name="active" eval="False"/>
+        <field name="active" eval="True"/>
     </record>
     <record id="rule_inventory_adjustment_warehouse_manager" model="adn.approval.rule">
         <field name="policy_id" ref="policy_inventory_adjustment_approval"/>
@@ -41,7 +40,7 @@
         <field name="approver_group_ids" eval="[(4, ref('group_warehouse_manager'))]"/>
         <field name="required_approvals">1</field>
         <field name="sequence_mode">parallel</field>
-        <field name="active" eval="False"/>
+        <field name="active" eval="True"/>
     </record>
     <record id="rule_inventory_adjustment_operations_finance" model="adn.approval.rule">
         <field name="policy_id" ref="policy_inventory_adjustment_approval"/>
@@ -56,7 +55,7 @@
         <field name="approver_group_ids" eval="[(4, ref('group_operations_manager')), (4, ref('group_finance_manager'))]"/>
         <field name="required_approvals">1</field>
         <field name="sequence_mode">parallel</field>
-        <field name="active" eval="False"/>
+        <field name="active" eval="True"/>
     </record>
     <record id="rule_inventory_adjustment_md_finance" model="adn.approval.rule">
         <field name="policy_id" ref="policy_inventory_adjustment_approval"/>
@@ -70,6 +69,6 @@
         <field name="approver_group_ids" eval="[(4, ref('group_managing_director')), (4, ref('group_finance_manager'))]"/>
         <field name="required_approvals">1</field>
         <field name="sequence_mode">parallel</field>
-        <field name="active" eval="False"/>
+        <field name="active" eval="True"/>
     </record>
 </odoo>

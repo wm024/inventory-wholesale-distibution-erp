@@ -12,7 +12,7 @@
                     <field name="adn_inventory_adjustment_grouping" required="adn_inventory_adjustment_approval_enabled"/>
                     <field name="adn_inventory_adjustment_rounding" required="adn_inventory_adjustment_approval_enabled"/>
                     <field name="adn_inventory_adjustment_valuation_timing" required="adn_inventory_adjustment_approval_enabled"/>
-                    <div class="text-muted" colspan="2">Keep approval disabled until DEC-003 is confirmed by Operations and Finance and the approval policy is activated.</div>
+                    <div class="text-muted" colspan="2">DEC-003 is approved. Keep enforcement disabled until approver groups, target-database valuation tests, and UAT are complete.</div>
                     </group>
                 </page>
             </xpath>

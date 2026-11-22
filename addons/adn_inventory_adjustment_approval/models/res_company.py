@@ -15,7 +15,8 @@ class ResCompany(models.Model):
             ("absolute_net", "Absolute Net Value"),
         ],
         string="Adjustment Approval Aggregation",
-        help="Must be selected after DEC-003 is confirmed by Operations and Finance.",
+        default="sum_absolute",
+        help="Approved DEC-003 rule: sum absolute adjustment-line values; gains and losses do not offset.",
     )
     adn_inventory_adjustment_grouping = fields.Selection(
         [
@@ -25,7 +26,8 @@ class ResCompany(models.Model):
             ("company_warehouse_category", "Separate by Company, Warehouse and Product Category"),
         ],
         string="Adjustment Approval Grouping",
-        help="Must be selected after DEC-003 is confirmed by Operations and Finance.",
+        default="company_warehouse",
+        help="Approved DEC-003 rule: one request per company, warehouse, and accounting date.",
     )
     adn_inventory_adjustment_rounding = fields.Selection(
         [
@@ -33,10 +35,12 @@ class ResCompany(models.Model):
             ("per_line", "Round Each Line Before Aggregation"),
         ],
         string="Adjustment Approval Rounding",
-        help="Must be selected after DEC-003 is confirmed by Operations and Finance.",
+        default="per_line",
+        help="Approved DEC-003 rule: round each adjustment line using company currency precision before aggregation.",
     )
     adn_inventory_adjustment_valuation_timing = fields.Selection(
         [("submission_release", "Snapshot at Submission and Revalidate Before Release")],
         string="Adjustment Valuation Snapshot Timing",
-        help="Supported implementation baseline; confirm under DEC-003 before activation.",
+        default="submission_release",
+        help="Approved DEC-003 rule: snapshot at submission and revalidate immediately before release.",
     )

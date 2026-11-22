@@ -57,12 +57,20 @@ class TestInventoryAdjustmentApproval(TransactionCase):
                 [{"signed_value": 100.0}], False, self.env.ref("base.IDR"), "aggregate",
             )
 
-    def test_policy_is_inactive_until_dec_003_is_closed(self):
+    def test_dec_003_policy_is_active_with_parallel_all_required_routing(self):
         policy = self.env.ref(
             "adn_inventory_adjustment_approval.policy_inventory_adjustment_approval"
         )
-        self.assertFalse(policy.active)
-        self.assertFalse(policy.rule_ids.filtered("active"))
+        self.assertTrue(policy.active)
+        self.assertEqual(policy.approval_mode, "all_required")
+        self.assertTrue(policy.rule_ids)
+        self.assertFalse(policy.rule_ids.filtered(lambda rule: not rule.active))
+        self.assertFalse(policy.rule_ids.filtered(lambda rule: rule.sequence_mode != "parallel"))
+        operations_finance = policy.rule_ids.filtered(
+            lambda rule: rule.tier_code == "INV_T3_OPERATIONS_FINANCE"
+        )
+        self.assertEqual(len(operations_finance.approver_group_ids), 2)
+        self.assertEqual(operations_finance.required_approvals, 1)
 
 
     def test_approval_tier_boundaries_match_fsd(self):
@@ -151,7 +159,10 @@ class TestInventoryAdjustmentApproval(TransactionCase):
             "adn_inventory_adjustment_approval.group_inventory_adjustment_requester"
         )
         self.env.user.write({"group_ids": [(4, requester_group.id)]})
-        self.env.company.write({"adn_inventory_adjustment_approval_enabled": True})
+        self.env.company.write({
+            "adn_inventory_adjustment_approval_enabled": True,
+            "adn_inventory_adjustment_aggregation": False,
+        })
         quant = self._create_count_quant()
         quant.write({"adn_adjustment_reason": "Cycle count variance"})
 
@@ -160,10 +171,30 @@ class TestInventoryAdjustmentApproval(TransactionCase):
 
         self.assertEqual(quant.quantity, 1.0)
 
-    def test_company_rollout_switch_and_dec_003_settings_default_off(self):
+
+    def test_default_grouping_is_company_warehouse_and_accounting_date(self):
         company = self.env.company
+        company.write({
+            "adn_inventory_adjustment_aggregation": "sum_absolute",
+            "adn_inventory_adjustment_grouping": "company_warehouse",
+            "adn_inventory_adjustment_rounding": "per_line",
+            "adn_inventory_adjustment_valuation_timing": "submission_release",
+        })
+        quant = self._create_count_quant()
+        grouped = self.env["stock.quant"]._adn_group_adjustment_quants(quant, company)
+        self.assertEqual(len(grouped), 1)
+        key = next(iter(grouped))
+        self.assertEqual(key[0], company.id)
+        self.assertEqual(key[1], quant.warehouse_id.id)
+        self.assertFalse(key[2])
+        self.assertEqual(key[3], quant.accounting_date)
+
+    def test_company_dec_003_defaults_are_configured_but_enforcement_is_off(self):
+        company = self.env["res.company"].create({"name": "ADN DEC-003 Defaults Test"})
         self.assertFalse(company.adn_inventory_adjustment_approval_enabled)
-        self.assertFalse(company.adn_inventory_adjustment_aggregation)
-        self.assertFalse(company.adn_inventory_adjustment_grouping)
-        self.assertFalse(company.adn_inventory_adjustment_rounding)
-        self.assertFalse(company.adn_inventory_adjustment_valuation_timing)
+        self.assertEqual(company.adn_inventory_adjustment_aggregation, "sum_absolute")
+        self.assertEqual(company.adn_inventory_adjustment_grouping, "company_warehouse")
+        self.assertEqual(company.adn_inventory_adjustment_rounding, "per_line")
+        self.assertEqual(
+            company.adn_inventory_adjustment_valuation_timing, "submission_release"
+        )

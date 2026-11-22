@@ -204,13 +204,19 @@ class StockQuant(models.Model):
         if not all(required_settings):
             raise ValidationError(_(
                 "DEC-003 configuration is incomplete for company %(company)s. "
-                "Operations and Finance must confirm aggregation, grouping, rounding and "
-                "valuation timing before enabling approval.",
+                "Apply the approved aggregation, grouping, rounding, and valuation timing "
+                "settings before enabling approval.",
                 company=company.display_name,
             ))
         grouped = defaultdict(lambda: self.env["stock.quant"])
         for quant in quants:
             warehouse = quant.warehouse_id
+            if grouping == "company_warehouse" and not warehouse:
+                raise ValidationError(_(
+                    "Inventory adjustment line %(line)s does not resolve to a warehouse. "
+                    "Assign the internal location to a warehouse before submitting the adjustment.",
+                    line=quant.display_name,
+                ))
             category = quant.product_id.product_tmpl_id.categ_id
             key = (
                 company.id,

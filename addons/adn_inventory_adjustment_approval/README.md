@@ -1,6 +1,6 @@
 # ADN Inventory Adjustment Approval — Odoo 19
 
-**Version:** 19.0.1.0.0  
+**Version:** 19.0.1.0.1  
 **Depends on:** `stock_account`, `mail`, `adn_approval_core`
 
 ## 1. Purpose
@@ -19,39 +19,21 @@ This addon adds a valuation-based approval gate to Odoo's standard physical inve
 - Retain immutable line snapshots and actual generated stock-move valuation.
 - Supersede pending/approved requests when relevant count inputs are changed.
 
-## 3. Valuation estimate
+## 3. Valuation estimate and approved DEC-003 rules
 
-The approval basis is the absolute valuation difference, not sales price.
+The approval basis is the absolute valuation difference, not sales price. Each changed `stock.quant` adjustment line is valued from its signed quantity difference and the applicable Odoo inventory valuation unit cost.
 
 - Positive adjustment: company-specific product standard cost, or lot standard cost when lot valuation applies.
 - Negative Standard/AVCO adjustment: company-specific product standard cost, or lot standard cost when lot valuation applies.
 - Negative FIFO adjustment: calculate each quant line using the same cumulative per-product FIFO quantity context used by Odoo's `stock_account` valuation flow; lot-valuated products use lot standard cost, matching Odoo's lot-valuation branch.
 - Non-valued locations and consigned stock excluded from valuation use zero value.
-- The final aggregate is rounded using the company currency's rounding configuration.
-- Requests are always split by accounting date to match Odoo's stock-accounting execution batches.
+- Round each changed adjustment line using the company currency precision, then sum the absolute rounded line values. Positive and negative lines both contribute and do not offset.
+- Create one request per company + warehouse + accounting date. Product categories within the same warehouse/date are included together. Different warehouses, companies, and accounting dates are separate requests. A valued line without a resolvable warehouse is rejected.
+- Snapshot valuation at submission and recalculate immediately before release. Any approval-relevant change supersedes the previous approval and requires a new request.
+- Multi-role approval uses parallel steps and `all_required` policy semantics. Every listed role must approve, and the engine requires distinct approvers.
+- Odoo's generated stock moves, valuation layers, and accounting entries remain authoritative; the addon does not create a parallel ledger.
 
-The addon stores the estimated approval value and the actual valuation value from the generated Odoo stock moves separately. FIFO valuation can change if unrelated stock valuation layers change between evaluation and execution; the request is recalculated before release, but concurrency against unrelated stock moves must still be tested in the target database.
-
-## 4. DEC-003 is an activation gate
-
-The approved FGA/TDD/RTM still identify DEC-003 as open: valuation basis/timing, aggregation across products, rounding, and approval routing require Operations/Finance confirmation. Therefore:
-
-- The company-level approval switch defaults to **OFF**. The four DEC-003 configuration fields (aggregation, grouping, rounding and valuation timing) default to unset and are required before activation.
-- The seeded approval policy and all approval rules default to **inactive**.
-- The aggregation method and grouping mode are intentionally unset.
-- Enabling the company switch without an active policy and completed configuration fails closed.
-
-Recommended options supplied for the decision workshop:
-
-| Setting | Option A | Option B |
-|---|---|---|
-| Aggregation | Sum absolute line values (prevents positive/negative offsets) | Absolute net value (allows offsets) |
-| Request grouping | Separate by company and warehouse | One request per company; company/category and company/warehouse/category grouping are also supported. All modes split by accounting date. |
-| Rounding | Company currency rounding after aggregate | Per-line rounding before aggregation |
-| Multi-role tiers | All required in parallel | All required in ordered sequence |
-| Valuation timing | Snapshot at submission and revalidate before release | Another Finance-approved timing rule |
-
-The seeded approval rules reflect the FSD value tiers, but remain inactive:
+DEC-003 was confirmed on **2026-11-22**. The approved IDR tiers are:
 
 | Absolute valuation difference | Required approver(s) |
 |---|---|
@@ -60,9 +42,9 @@ The seeded approval rules reflect the FSD value tiers, but remain inactive:
 | Above IDR 10,000,000–50,000,000 | Operations Manager + Finance Manager |
 | Above IDR 50,000,000 | Managing Director + Finance Manager |
 
-The seeded multi-role policy uses `all_required` with parallel steps as a conservative placeholder. Confirm the approval mode with Operations/Finance before activation.
+The approval policy and rules are active in module data. The company-level enforcement switch remains **OFF** by default. Policy readiness is therefore separate from operational rollout.
 
-## 5. Installation
+## 4. Installation
 
 Add this addon and the existing approval suite to the Odoo addons path, then update the app list and install:
 
@@ -72,18 +54,23 @@ Add this addon and the existing approval suite to the Odoo addons path, then upd
 
 The dependencies must be available in the addons path. For an existing environment where `adn_approval_core` is already installed, the new module can be installed independently.
 
-## 6. Configuration before activation
+For an existing installation of version `19.0.1.0.0`, upgrade the module to apply the DEC-003 migration (approved company settings and active approval policy/rules). The migration does not enable the company enforcement switch:
+
+```bash
+./odoo-bin -d <database> -u adn_inventory_adjustment_approval --stop-after-init
+```
+
+## 5. Configuration before activation
 
 1. Assign the Inventory Adjustment Requester group to authorized count users.
 2. Assign Warehouse Supervisor, Warehouse Manager, Operations Manager, Finance Manager, and Managing Director approval groups to the correct users.
 3. Assign Inventory Adjustment Executor to authorized inventory managers.
-4. Confirm DEC-003 with Operations and Finance.
-5. Set aggregation, request grouping (company, company/warehouse, company/category, or company/warehouse/category), rounding, and valuation timing on each company.
-6. Activate the approval policy and only the approved rules; confirm the all-required/parallel mode or change it to the approved routing mode.
-7. Set the company-level approval switch to ON.
-8. Run the full boundary, valuation, access, and accounting regression suite in the target Odoo 19 database.
+4. Review the approved DEC-003 configuration and ensure warehouse/location mapping is complete. Confirm policy groups and assign distinct authorized users for Warehouse Supervisor, Warehouse Manager, Operations Manager, Finance Manager, and Managing Director.
+6. Verify the active policy uses `all_required` and parallel steps; both roles in the two-role tiers must approve.
+7. Run the full boundary, valuation, access, concurrency, and accounting regression suite in the target Odoo 19 database.
+8. Enable the company-level approval switch only after UAT and operational sign-off.
 
-## 7. Security and enforcement
+## 6. Security and enforcement
 
 - Requesters can read their own requests; approvers and executors can read requests in their allowed companies.
 - Snapshot lines are immutable for business users.
@@ -93,7 +80,7 @@ The dependencies must be available in the addons path. For an existing environme
 - Relevant changes to count quantities, quant identity, assigned counter, accounting date, reason, or evidence supersede the prior approval; evidence is copied to the request, checksum-verified, and read-only there.
 - No manual transaction commits or custom stock/accounting ledger are introduced.
 
-## 8. Tests
+## 7. Tests
 
 Automated tests included:
 - Sum-of-absolute-lines aggregation.
@@ -101,7 +88,8 @@ Automated tests included:
 - Missing aggregation configuration.
 - FSD approval tier boundaries.
 - Per-line currency rounding.
-- Default-disabled rollout and inactive policy safeguards.
+- Default-disabled enforcement switch, approved policy/routing, and company configuration safeguards.
+- Company/warehouse/accounting-date grouping.
 - Direct low-level inventory apply guard.
 - Inventory-report zero-quantity action gate.
 - Inventory-mode reason/evidence field handling.
@@ -117,16 +105,15 @@ Integration/UAT coverage still required:
 - Standard and AVCO positive/negative adjustments.
 - FIFO adjustments across multiple layers and products.
 - Lot-valuated and consigned stock.
-- Multi-product, multi-warehouse, and multi-company grouping.
+- Multi-product aggregation across categories within a warehouse/date; separate warehouse/company/accounting-date requests; missing warehouse mapping is rejected.
 - Outdated counts and concurrent submissions.
 - Stale approval after quantity/cost/lot changes.
 - UI, import, and RPC attempts to bypass the gate.
 - Evidence attachment copying, checksum integrity, and access after quant cleanup.
 - Stock valuation and GL reconciliation for all five product categories.
 
-## 9. Known limitations
+## 8. Known limitations
 
-- DEC-003 is not formally closed; production activation is intentionally blocked by default.
+- DEC-003 is approved and configured. Production enforcement remains disabled by default pending target-database runtime tests and UAT.
 - No Odoo server/database was available in the build environment, so runtime installation and Odoo tests have not been executed.
 - FIFO layer contention with unrelated stock moves requires target-database concurrency testing.
-- The seeded approval policy's approval mode is a placeholder pending business confirmation.
