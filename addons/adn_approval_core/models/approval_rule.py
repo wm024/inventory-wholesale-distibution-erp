@@ -23,11 +23,18 @@ class AdnApprovalRule(models.Model):
     requester_group_exclusions = fields.Many2many("res.groups", "adn_approval_rule_exclusion_rel", "rule_id", "group_id", string="Requester Group Exclusions")
     active = fields.Boolean(default=True)
 
-    _sql_constraints = [
-        ("required_approvals_positive", "check(required_approvals > 0)", "Required approvals must be greater than zero."),
-        ("amount_range_valid", "check(max_amount is null or min_amount is null or max_amount >= min_amount)", "Maximum amount must not be lower than minimum amount."),
-        ("tier_policy_uniq", "unique(policy_id, tier_code)", "Tier code must be unique within a policy."),
-    ]
+    _required_approvals_positive = models.Constraint(
+        "CHECK(required_approvals > 0)",
+        "Required approvals must be greater than zero.",
+    )
+    _amount_range_valid = models.Constraint(
+        "CHECK(max_amount IS NULL OR min_amount IS NULL OR max_amount >= min_amount)",
+        "Maximum amount must not be lower than minimum amount.",
+    )
+    _tier_policy_uniq = models.Constraint(
+        "UNIQUE(policy_id, tier_code)",
+        "Tier code must be unique within a policy.",
+    )
 
     @api.constrains("approver_group_ids", "active")
     def _check_groups(self):

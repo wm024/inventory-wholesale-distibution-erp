@@ -1,0 +1,78 @@
+<odoo noupdate="1">
+    <record id="seq_credit_evaluation" model="ir.sequence">
+        <field name="name">Credit Evaluation</field>
+        <field name="code">adn.credit.evaluation</field>
+        <field name="prefix">CRD/%(year)s/</field>
+        <field name="padding">6</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- DEC-006 is open: keep the exception policy inactive until Finance signs off overlap,
+         trigger, concurrent-order strategy and expiry. -->
+    <record id="policy_credit_exception" model="adn.approval.policy">
+        <field name="name">Customer Credit Exception</field>
+        <field name="code">CREDIT_EXCEPTION</field>
+        <field name="active" eval="False"/>
+        <field name="source_model_id" ref="sale.model_sale_order"/>
+        <field name="policy_version">1</field>
+        <field name="approval_mode">sequential</field>
+        <field name="notes">FSD: over-limit up to IDR 25,000,000 requires Finance Manager; above IDR 25,000,000 requires Finance Manager and Managing Director; overdue over 30 days requires Finance Manager. Activate only after DEC-006 is formally closed and company-specific expiry/commitment basis are configured.</field>
+    </record>
+    <record id="rule_credit_finance_manager" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_credit_exception"/>
+        <field name="sequence">10</field>
+        <field name="has_min_amount" eval="False"/>
+        <field name="has_max_amount" eval="False"/>
+        <field name="tier_code">CREDIT_FINANCE_MANAGER</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_finance_manager_credit_approver'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="rule_credit_finance_md" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_credit_exception"/>
+        <field name="sequence">20</field>
+        <field name="has_min_amount" eval="False"/>
+        <field name="has_max_amount" eval="False"/>
+        <field name="tier_code">CREDIT_FINANCE_MD</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_finance_manager_credit_approver')), (4, ref('group_managing_director_credit_approver'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- The FSD requires Finance Manager approval for every credit-limit change.
+         DEC-006/TDD §5.3.7 leaves the IDR 100m threshold basis unresolved. -->
+    <record id="policy_credit_limit_change" model="adn.approval.policy">
+        <field name="name">Customer Credit Limit Change</field>
+        <field name="code">CREDIT_LIMIT_CHANGE</field>
+        <field name="active" eval="False"/>
+        <field name="source_model_id" ref="model_adn_partner_credit"/>
+        <field name="policy_version">1</field>
+        <field name="approval_mode">sequential</field>
+        <field name="notes">Finance Manager approves all limit changes. Finance Manager and Managing Director approve changes above IDR 100,000,000. Activate only after Finance confirms whether the threshold applies to the increase amount or the resulting limit.</field>
+    </record>
+    <record id="rule_credit_limit_finance_manager" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_credit_limit_change"/>
+        <field name="sequence">10</field>
+        <field name="has_min_amount" eval="False"/>
+        <field name="has_max_amount" eval="False"/>
+        <field name="tier_code">CREDIT_LIMIT_FINANCE_MANAGER</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_finance_manager_credit_approver'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="rule_credit_limit_finance_md" model="adn.approval.rule">
+        <field name="policy_id" ref="policy_credit_limit_change"/>
+        <field name="sequence">20</field>
+        <field name="has_min_amount" eval="False"/>
+        <field name="has_max_amount" eval="False"/>
+        <field name="tier_code">CREDIT_LIMIT_FINANCE_MD</field>
+        <field name="approver_group_ids" eval="[(4, ref('group_finance_manager_credit_approver')), (4, ref('group_managing_director_credit_approver'))]"/>
+        <field name="required_approvals">1</field>
+        <field name="sequence_mode">ordered</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

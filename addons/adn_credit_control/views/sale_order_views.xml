@@ -1,0 +1,28 @@
+<odoo>
+    <record id="view_order_form_credit_control" model="ir.ui.view">
+        <field name="name">sale.order.form.credit.control</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Customer Credit Control" name="adn_credit_control_group">
+                    <group>
+                        <field name="adn_credit_decision" readonly="1"/>
+                        <field name="adn_credit_exposure" readonly="1" groups="adn_credit_control.group_credit_manager,adn_credit_control.group_finance_manager_credit_approver,adn_credit_control.group_managing_director_credit_approver"/>
+                        <field name="adn_credit_available" readonly="1" groups="adn_credit_control.group_credit_manager,adn_credit_control.group_finance_manager_credit_approver,adn_credit_control.group_managing_director_credit_approver"/>
+                        <field name="adn_credit_utilization" readonly="1" groups="adn_credit_control.group_credit_manager,adn_credit_control.group_finance_manager_credit_approver,adn_credit_control.group_managing_director_credit_approver"/>
+                    </group>
+                    <group>
+                        <field name="adn_credit_evaluation_id" readonly="1" groups="adn_credit_control.group_credit_manager,adn_credit_control.group_finance_manager_credit_approver,adn_credit_control.group_managing_director_credit_approver"/>
+                        <field name="adn_credit_approval_request_id" readonly="1"/>
+                        <field name="adn_credit_exception_reason" placeholder="Business justification for exceeding the credit policy..."/>
+                    </group>
+                    <button name="action_open_credit_exception_wizard" type="object"
+                            string="Submit Credit Exception" class="btn-secondary"
+                            invisible="state not in ('draft', 'sent') or not company_id.adn_credit_control_enabled"
+                            groups="adn_credit_control.group_credit_requester"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

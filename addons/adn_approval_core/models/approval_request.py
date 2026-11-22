@@ -47,9 +47,6 @@ class AdnApprovalRequest(models.Model):
     step_count = fields.Integer(compute="_compute_counts")
     pending_step_count = fields.Integer(compute="_compute_counts")
 
-    _sql_constraints = [
-    ]
-
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
@@ -107,7 +104,7 @@ class AdnApprovalRequest(models.Model):
         if not rule.approver_group_ids:
             raise ValidationError(_("The selected approval rule has no approver groups."))
         user = self.env.user
-        excluded = rule.requester_group_exclusions & user.groups_id
+        excluded = rule.requester_group_exclusions & user.group_ids
         steps_data = []
         for group in rule.approver_group_ids:
             if group in excluded:
@@ -158,7 +155,7 @@ class AdnApprovalRequest(models.Model):
             raise AccessError(_("Each approval step must be approved by a distinct user."))
         if step.approver_id and step.approver_id != user:
             raise AccessError(_("This approval step is assigned to another user."))
-        if step.approver_group_id not in user.groups_id:
+        if step.approver_group_id not in user.group_ids:
             raise AccessError(_("You are not a member of the required approver group."))
         if user.company_ids and self.company_id not in user.company_ids:
             raise AccessError(_("You are not authorized for this company."))
@@ -170,9 +167,9 @@ class AdnApprovalRequest(models.Model):
             pending_steps = request.step_ids.filtered(lambda s: s.decision == "pending").sorted(lambda s: (s.sequence, s.id))
             if request.sequence_mode == "ordered":
                 first_step = pending_steps[:1]
-                step = first_step.filtered(lambda s: s.approver_group_id in self.env.user.groups_id)
+                step = first_step.filtered(lambda s: s.approver_group_id in self.env.user.group_ids)
             else:
-                step = pending_steps.filtered(lambda s: s.approver_group_id in self.env.user.groups_id)[:1]
+                step = pending_steps.filtered(lambda s: s.approver_group_id in self.env.user.group_ids)[:1]
             if not step:
                 raise AccessError(_("There is no pending approval step assigned to one of your groups."))
             step._record_decision("approved", comment=comment)
@@ -244,7 +241,13 @@ class AdnApprovalRequest(models.Model):
         return True
 
     def write(self, vals):
-        protected = {"policy_id", "policy_version", "company_id", "source_model", "source_res_id", "requester_id", "requested_at", "source_fingerprint", "source_snapshot", "state", "completed_at", "cancelled_at"}
+        protected = {
+            "policy_id", "policy_version", "company_id", "source_model", "source_res_id",
+            "requester_id", "requested_at", "submitted_by_id", "source_fingerprint",
+            "source_snapshot", "tier_code", "amount", "amount_basis", "currency_id", "approval_mode",
+            "sequence_mode", "required_approvals", "reason", "valid_until", "state",
+            "completed_at", "cancelled_at",
+        }
         if protected.intersection(vals) and not self.env.su:
             raise AccessError(_("Approval lifecycle fields can only be changed through workflow actions."))
         return super().write(vals)

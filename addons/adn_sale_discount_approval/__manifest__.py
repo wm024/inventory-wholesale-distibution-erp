@@ -1,6 +1,6 @@
 {
     "name": "ADN Sales Discount Approval",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "category": "Sales",
     "summary": "Per-line discount evaluation and auditable sales approval",
     "description": "Sales order discount approval adapter using ADN Approval Core.",

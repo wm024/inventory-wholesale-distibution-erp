@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_adn_partner_credit_manager,adn.partner.credit manager,model_adn_partner_credit,adn_credit_control.group_credit_manager,1,1,1,0
+access_adn_partner_credit_finance,adn.partner.credit finance approver,model_adn_partner_credit,adn_credit_control.group_finance_manager_credit_approver,1,0,0,0
+access_adn_credit_evaluation_manager,adn.credit.evaluation manager,model_adn_credit_evaluation,adn_credit_control.group_credit_manager,1,0,0,0
+access_adn_credit_evaluation_finance,adn.credit.evaluation finance approver,model_adn_credit_evaluation,adn_credit_control.group_finance_manager_credit_approver,1,0,0,0
+access_adn_credit_exception_reason_user,adn.credit.exception.reason user,model_adn_credit_exception_reason,base.group_user,1,1,1,1
+access_adn_partner_credit_md,adn.partner.credit managing director,model_adn_partner_credit,adn_credit_control.group_managing_director_credit_approver,1,0,0,0
+access_adn_credit_evaluation_md,adn.credit.evaluation managing director,model_adn_credit_evaluation,adn_credit_control.group_managing_director_credit_approver,1,0,0,0
+access_sale_order_credit_manager,sale.order credit manager read,sale.model_sale_order,adn_credit_control.group_credit_manager,1,0,0,0
+access_sale_order_line_credit_manager,sale.order.line credit manager read,sale.model_sale_order_line,adn_credit_control.group_credit_manager,1,0,0,0
+access_sale_order_finance_approver,sale.order finance approver read,sale.model_sale_order,adn_credit_control.group_finance_manager_credit_approver,1,0,0,0
+access_sale_order_line_finance_approver,sale.order.line finance approver read,sale.model_sale_order_line,adn_credit_control.group_finance_manager_credit_approver,1,0,0,0
+access_sale_order_md_approver,sale.order managing director read,sale.model_sale_order,adn_credit_control.group_managing_director_credit_approver,1,0,0,0
+access_sale_order_line_md_approver,sale.order.line managing director read,sale.model_sale_order_line,adn_credit_control.group_managing_director_credit_approver,1,0,0,0

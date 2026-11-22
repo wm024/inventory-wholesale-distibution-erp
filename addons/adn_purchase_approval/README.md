@@ -1,6 +1,6 @@
 # ADN Purchase Approval (Odoo 19)
 
-**Technical version:** `19.0.1.0.0`  
+**Technical version:** `19.0.1.0.1`  
 **Depends on:** `purchase`, `adn_approval_core`  
 **Baseline:** ADN-FSD-001 §6.5.3; ADN-TDD-001 §4.6, §4.7, §5.1; ADN-RTM-001 FSD-PUR-006–008 / TC-PUR-001–008  
 **Customization:** CUS-002 — Purchase Order Approval

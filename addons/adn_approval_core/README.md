@@ -74,3 +74,10 @@ Approval request, step, item, and event record rules also limit Approval Users t
 ## Internal adapter routing API (v19.0.1.0.2)
 
 `adn.approval.request.submit(...)` remains the public amount-based submission API. Transaction adapters that must route on a non-monetary basis (for example, sales discount percentage) use the private server-side `_submit_with_rule(...)` method with a validated rule ID and explicit source currency. The leading underscore keeps this adapter method unavailable through normal external RPC method dispatch; callers must perform their own source-model authorization, snapshot calculation, and policy-specific validation before invoking it.
+
+## Odoo 19 compatibility hardening — 19.0.1.0.3
+
+- Uses Odoo 19 `res.groups.privilege` / `res.groups.privilege_id` instead of the legacy group `category_id` field.
+- Uses `res.users.group_ids` for user-group membership and record-rule evaluation.
+- Declares database constraints with Odoo 19 `models.Constraint`.
+- Protects approval routing, reason, source snapshot/fingerprint, submitter and expiry fields from direct ORM writes; lifecycle changes remain workflow-controlled.

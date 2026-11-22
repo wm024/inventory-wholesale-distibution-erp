@@ -1,0 +1,22 @@
+{
+    "name": "ADN Customer Credit Control",
+    "version": "19.0.1.0.0",
+    "category": "Sales/Accounting",
+    "summary": "Customer credit exposure, warning, hold and exception approval",
+    "description": "Credit control adapter using standard Odoo receivables and sales orders.",
+    "author": "Muhammad Ridho Ramadhan",
+    "depends": ["sale_management", "sales_team", "account", "mail", "adn_approval_core"],
+    "data": [
+        "security/credit_control_groups.xml",
+        "security/ir.model.access.csv",
+        "data/credit_approval_policy.xml",
+        "views/res_partner_views.xml",
+        "views/sale_order_views.xml",
+        "views/res_company_views.xml",
+        "views/credit_evaluation_views.xml",
+        "wizard/credit_exception_reason_views.xml",
+    ],
+    "installable": True,
+    "application": False,
+    "license": "LGPL-3",
+}

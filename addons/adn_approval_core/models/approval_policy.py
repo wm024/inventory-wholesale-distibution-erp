@@ -26,10 +26,14 @@ class AdnApprovalPolicy(models.Model):
     notes = fields.Text()
     rule_ids = fields.One2many("adn.approval.rule", "policy_id", string="Approval Rules")
 
-    _sql_constraints = [
-        ("code_company_uniq", "unique(code, company_id)", "The policy code must be unique per company."),
-        ("version_positive", "check(policy_version > 0)", "Policy version must be greater than zero."),
-    ]
+    _code_company_uniq = models.Constraint(
+        "UNIQUE(code, company_id)",
+        "The policy code must be unique per company.",
+    )
+    _version_positive = models.Constraint(
+        "CHECK(policy_version > 0)",
+        "Policy version must be greater than zero.",
+    )
 
     @api.constrains("effective_from", "effective_to")
     def _check_effective_dates(self):

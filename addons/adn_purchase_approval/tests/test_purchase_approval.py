@@ -14,14 +14,14 @@ class TestAdnPurchaseApproval(TransactionCase):
             "login": "adn_po_requester_test",
             "company_id": cls.company.id,
             "company_ids": [(6, 0, [cls.company.id])],
-            "groups_id": [(6, 0, [cls.env.ref("base.group_user").id, cls.requester_group.id])],
+            "group_ids": [(6, 0, [cls.env.ref("base.group_user").id, cls.requester_group.id])],
         })
         cls.supervisor = cls.env["res.users"].create({
             "name": "ADN PO Supervisor",
             "login": "adn_po_supervisor_test",
             "company_id": cls.company.id,
             "company_ids": [(6, 0, [cls.company.id])],
-            "groups_id": [(6, 0, [cls.env.ref("base.group_user").id, cls.supervisor_group.id])],
+            "group_ids": [(6, 0, [cls.env.ref("base.group_user").id, cls.supervisor_group.id])],
         })
         cls.vendor = cls.env["res.partner"].create({
             "name": "ADN Test Vendor", "company_id": False, "supplier_rank": 1,

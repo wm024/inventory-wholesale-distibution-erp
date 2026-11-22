@@ -10,11 +10,11 @@ class TestAdnApprovalEngine(TransactionCase):
         cls.manager_group = cls.env.ref("adn_approval_core.group_approval_manager")
         cls.requester = cls.env["res.users"].create({
             "name": "ADN Approval Requester", "login": "adn_approval_requester_test",
-            "groups_id": [(6, 0, [cls.env.ref("base.group_user").id, cls.env.ref("adn_approval_core.group_approval_user").id])],
+            "group_ids": [(6, 0, [cls.env.ref("base.group_user").id, cls.env.ref("adn_approval_core.group_approval_user").id])],
         })
         cls.approver = cls.env["res.users"].create({
             "name": "ADN Approval Approver", "login": "adn_approval_approver_test",
-            "groups_id": [(6, 0, [cls.env.ref("base.group_user").id, cls.approver_group.id])],
+            "group_ids": [(6, 0, [cls.env.ref("base.group_user").id, cls.approver_group.id])],
         })
         cls.policy = cls.env["adn.approval.policy"].create({
             "name": "Test Policy", "code": "TEST_APPROVAL", "source_model_id": cls.env.ref("base.model_res_partner").id,
@@ -62,7 +62,7 @@ class TestAdnApprovalEngine(TransactionCase):
             "TEST_APPROVAL", self.source.with_user(self.requester), 3000, {"amount": 3000}, "Test")
         unrelated_user = self.env["res.users"].create({
             "name": "Unassigned Approval User", "login": "adn_unassigned_approver_test",
-            "groups_id": [(6, 0, [self.env.ref("base.group_user").id, self.env.ref("adn_approval_core.group_approval_user").id])],
+            "group_ids": [(6, 0, [self.env.ref("base.group_user").id, self.env.ref("adn_approval_core.group_approval_user").id])],
         })
         visible = self.env["adn.approval.request"].with_user(unrelated_user).search([("id", "=", request.id)])
         self.assertFalse(visible)

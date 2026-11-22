@@ -1,6 +1,6 @@
 # ADN Sales Discount Approval
 
-**Version:** 19.0.1.0.0  
+**Version:** 19.0.1.0.1  
 **Platform:** Odoo 19 Enterprise  
 **Depends on:** `sale_management`, `adn_approval_core`
 

@@ -1,0 +1,22 @@
+<odoo>
+    <record id="view_company_form_credit_control" model="ir.ui.view">
+        <field name="name">res.company.form.credit.control</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="ADN Credit Control — DEC-006" groups="base.group_system">
+                    <field name="adn_credit_control_enabled"/>
+                    <field name="adn_credit_commitment_basis"/>
+                    <field name="adn_credit_trigger_point"/>
+                    <field name="adn_credit_exception_validity_start"/>
+                    <field name="adn_credit_warning_boundary"/>
+                    <field name="adn_credit_hold_boundary"/>
+                    <field name="adn_credit_exception_validity_hours"/>
+                    <field name="adn_credit_limit_threshold_basis"/>
+                    <div class="text-muted">Do not configure or activate credit exception release until Finance has formally closed DEC-006.</div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,6 +1,6 @@
 {
     "name": "ADN Purchase Approval",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "category": "Purchases",
     "summary": "Tiered, auditable purchase order approval for ADN",
     "description": "Server-side purchase order approval adapter using ADN Approval Core.",
